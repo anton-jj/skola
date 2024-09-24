@@ -2,6 +2,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Transaction implements Comparable<Transaction>, Serializable {
+
+   public enum TransactionType {
+      INCOME,
+      EXPENSE;
+  }
    private static final long serialVersionUID = 1L;
 
    private TransactionType type;

@@ -2,9 +2,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.util.List;
 
 public class FinanceManger {
     public ArrayList<Transaction> transactions;
@@ -20,23 +20,11 @@ public class FinanceManger {
     }
 
     public double getBalance() {
-        return calcBalance();
-    }
-
-    private double calcBalance() {
-        double balance = 0;
-        for (Transaction t : transactions) {
-            if (t.getType().equals(TransactionType.EXPENSE)) {
-                balance -= t.getAmount();
-            } else {
-                balance += t.getAmount();
-            }
-        }
         return balance;
     }
 
     private void updateBalance(Transaction transaction) {
-        if (transaction.getType() == TransactionType.INCOME) {
+        if (transaction.getType() == Transaction.TransactionType.INCOME) {
             balance += transaction.getAmount();
         } else {
             balance -= transaction.getAmount();
@@ -44,7 +32,7 @@ public class FinanceManger {
     }
 
     public void addTransaction(Scanner scanner) {
-        TransactionType type = setType(scanner);
+        Transaction.TransactionType type = setType(scanner);
         if (type != null) {
             Transaction transaction = createTransaction(scanner, type);
             if (transaction != null) {
@@ -55,7 +43,7 @@ public class FinanceManger {
         }
     }
 
-    private Transaction createTransaction(Scanner scanner, TransactionType type) {
+    private Transaction createTransaction(Scanner scanner, Transaction.TransactionType type) {
         while (true) {
             System.out.println("Make tranaction (amount) (description) (date yyyy-MM-dd): ");
             String input = scanner.nextLine().trim();
@@ -87,7 +75,10 @@ public class FinanceManger {
         System.out.print("enter index of trasation to remove: ");
         int index = scanner.nextInt() - 1;
         if (index >= 0 && index < transactions.size()) {
+            Transaction removedTransaction = transactions.get(index);
+            updateBalance(removedTransaction);
             transactions.remove(index);
+            System.out.print("Transaction Removed\n");
         } else {
             System.out.print("Invalid index\n");
         }
@@ -127,23 +118,23 @@ public class FinanceManger {
                 printTransactions(todayTransactions, "Transactions today");
                 break;
             case 2:
-                LocalDate oneWeek = today.minusDays(7);
+                LocalDate oneWeek = today.minusWeeks(1);
                 List<Transaction> lastWeekTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneWeek) && !t.getDate().isBefore(today))
+                        .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1)) && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
                 printTransactions(lastWeekTransactions, "Transactions last week");
                 break;
             case 3:
-                LocalDate oneMonth = today.minusDays(30);
+                LocalDate oneMonth = today.minusMonths(1);
                 List<Transaction> lastMonthTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneMonth) && !t.getDate().isBefore(today))
+                        .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1)) && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
                 printTransactions(lastMonthTransactions, "Transactions last month");
                 break;
             case 4:
-                LocalDate oneYear = today.minusDays(364);
+                LocalDate oneYear = today.minusYears(1);
                 List<Transaction> lastYearTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneYear) && !t.getDate().isBefore(today))
+                        .filter(t -> t.getDate().isAfter(oneYear.minusDays(1)) && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
                 printTransactions(lastYearTransactions, "Transactions last year");
                 break;
@@ -174,12 +165,12 @@ public class FinanceManger {
         }
     }
 
-    public TransactionType setType(Scanner scanner) {
+    public Transaction.TransactionType setType(Scanner scanner) {
         while (true) {
             System.out.print("Enter type (Expense/Income)\n");
             String input = scanner.nextLine().trim().toUpperCase();
             try {
-                return TransactionType.valueOf(input);
+                return Transaction.TransactionType.valueOf(input);
             } catch (IllegalArgumentException e) {
                 System.out.print("Invalid transacion type. Please enter either 'Expense' or 'Income'\n");
             }
