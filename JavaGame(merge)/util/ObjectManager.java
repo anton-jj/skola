@@ -1,19 +1,19 @@
 package util;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 import main.Main;
 
 
 public class ObjectManager {
     private List<GameObject> objects;
-    public Main main;
-    // initiserar lista och skapar objekt
+    public Main main; // refererar till main för kommunicationene mellan dem
 
     public ObjectManager(Main main) {
-        this.main = main;
-        objects = new ArrayList<>();
-        createObjects(); // skapar objekt när objectmanager initieras
+        this.main = main; // sätter referensen till main
+        objects = new ArrayList<>(); // initsierar en lista med objekt 
+        createObjects(); // skapar objekt när objectmanager initieras och lägger till dem i lista n
     }
 
     // skapa objekt lista
@@ -32,10 +32,9 @@ public class ObjectManager {
     public List<GameObject> getObjects(){
         return objects;
     }
-    // returnerar object som matchar det angivna namnet från string eller null om
-    // inte hittar något
+    // Returnerar ett GameObject som matchar med angivet namn, eller null om inget hittas 
     public GameObject objectsbyName(String name) {
-        // kollar efete r ett objekt med det angivna nmanet
+        // loopar igeniom alla objekt och jämför deras namns med det angivna nmanet 
         for (GameObject obj : objects) {
             if (obj.getName().equalsIgnoreCase(name)) {
                 return obj;

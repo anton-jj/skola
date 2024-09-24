@@ -20,14 +20,26 @@ public class FinanceManger {
     }
 
     public double getBalance() {
+        calcBalance();
         return balance;
     }
-
+    private void calcBalance(){
+        balance = 0;
+        for (Transaction t : transactions){
+            if(t.getType().equals(Transaction.TransactionType.INCOME)){
+                balance += t.getAmount();
+            }else {
+                balance -= t.getAmount();
+            }
+        }
+    }
     private void updateBalance(Transaction transaction) {
         if (transaction.getType() == Transaction.TransactionType.INCOME) {
             balance += transaction.getAmount();
+            System.out.println(balance);
         } else {
             balance -= transaction.getAmount();
+            System.out.println(balance);
         }
     }
 
@@ -72,7 +84,7 @@ public class FinanceManger {
     }
 
     public void removeTransaction(Scanner scanner) {
-        System.out.print("enter index of trasation to remove: ");
+        System.out.print("enter index of transaction to remove: ");
         int index = scanner.nextInt() - 1;
         if (index >= 0 && index < transactions.size()) {
             Transaction removedTransaction = transactions.get(index);
@@ -82,7 +94,6 @@ public class FinanceManger {
         } else {
             System.out.print("Invalid index\n");
         }
-        scanner.nextInt();
     }
 
     public void listTransactions() {

@@ -1,22 +1,24 @@
 package util;
 import java.util.HashSet;
 import java.util.Set;
+
 import main.Main;
 public class KeyManager {
 
-    private Set<GameObject> visableKeys; 
-    private int keyCount; 
-
+    private Set<GameObject> visableKeys; // mängden av synliga nycklar 
+    private int keyCount;  // räknare för antealet hittade nycklar 
+    // kontruktor för keymanager
     public KeyManager(Main main){
         this.visableKeys = new HashSet<>();
         this.keyCount = 0; 
     }
+    // lägg till nyckel till dem synliga om objektet har en nyckel
     public void addVisableKeys(GameObject obj){
         if(obj.hasKey()){
             visableKeys.add(obj);
         }
     }
-    // tabort nycklar  från objekt
+
     public void removeKey(GameObject obj){
         if (visableKeys.contains(obj)){
             visableKeys.remove(obj);

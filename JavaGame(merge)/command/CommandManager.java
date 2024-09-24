@@ -1,10 +1,15 @@
 package command;
-import util.KeyManager;
+
 import java.util.Scanner;
+
 import main.Main;
-import util.*;
+import util.KeyManager;
+import util.ObjectManager;
 
 public class CommandManager {
+    /**
+     * skapar klasser och objekt för olika kommandon
+     */
     public Scanner readCommand;
     public Open openCommand;
     public Help helpCommand;
@@ -13,10 +18,11 @@ public class CommandManager {
     public Pickup pickupCommand;
     public ObjectManager objectManager;
     public SearchCommand searchCommand;
-    //public Main main;
+
     public CommandManager(Main main) {
-        // initialiserar kommandon, objekthanterare och öppning
-        this.objectManager = main.getObjectManager(); // Hämta ObjectManager från Main
+        // initsierar kammandon och objekthanterare och skickar main för interageras med
+        // olika delar av spoelet
+        this.objectManager = main.getObjectManager();
         readCommand = new Scanner(System.in);
         keyManager = new KeyManager(main);
         openCommand = new Open(main, objectManager, keyManager);
@@ -27,14 +33,19 @@ public class CommandManager {
 
     }
 
-    public KeyManager getKeyManager(){
+    // returnerar KeyMAnagern för att hantera nycklar i spelet.
+    // dettta reurnerar en keymanager instans
+    public KeyManager getKeyManager() {
         return keyManager;
     }
 
+    /**
+     * ansvarar för att ta emot input samnt
+     * validera inputen
+     * samt anropar lämplig metod baserat på det
+     */
     public void getCommand() {
-        // läser kommando från användare
         String input = readCommand.nextLine();
-
         input = input.toLowerCase();
 
         if (input.isBlank()) {
@@ -42,17 +53,18 @@ public class CommandManager {
             return;
         }
 
-        // Så att input finns i två delar för både kommando och objekt
         String[] parts = input.split(" ", 2);
-        String command = parts[0];
-        String choosenObject;
 
+        String command = parts[0]; // kommandot
+        String choosenObject;
         if (parts.length > 1) {
-            choosenObject = parts[1];
-        }else {
+            choosenObject = parts[1]; // objektet som användaren valt
+        } else {
             choosenObject = "";
         }
-
+        /**
+         * switch för att anropa metoder per kommando
+         */
         switch (command) {
             case "open":
                 openCommand.checkKey(choosenObject);
@@ -62,17 +74,16 @@ public class CommandManager {
                 break;
             case "pickup":
                 pickupCommand.pickup(choosenObject);
-                break;   
+                break;
             case "say":
-                //sayCommand.showRiddle();    
                 sayCommand.say(choosenObject);
                 break;
             case "search":
                 searchCommand.run(objectManager);
                 break;
-            case "exit": 
+            case "exit":
                 System.exit(0);
-                break; 
+                break;
             default:
                 System.out.println("not valid command:  " + command);
                 break;

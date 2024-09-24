@@ -1,12 +1,9 @@
 package command;
-import util.ObjectManager;
 import main.Main;
+import util.ObjectManager;
 
 public class SearchCommand {
-    private Main main;
-    
     public SearchCommand(Main main) {
-        this.main = main;
     }
     public void run(ObjectManager objectManager) {
         for (Object obj : objectManager.getObjects()) {
@@ -14,5 +11,4 @@ public class SearchCommand {
         }
         System.out.println("Write open <object> to open");
     }
-   
 }
