@@ -9,9 +9,10 @@ public class CommandManager {
     public Open openCommand;
     public Help helpCommand;
     private KeyManager keyManager;
-    private Say sayCommand;
+    public Say sayCommand;
     public Pickup pickupCommand;
     public ObjectManager objectManager;
+    public SearchCommand searchCommand;
     //public Main main;
     public CommandManager(Main main) {
         // initialiserar kommandon, objekthanterare och öppning
@@ -22,6 +23,7 @@ public class CommandManager {
         helpCommand = new Help(main);
         sayCommand = new Say(main);
         pickupCommand = new Pickup(main, objectManager, keyManager);
+        searchCommand = new SearchCommand(main);
 
     }
 
@@ -32,10 +34,9 @@ public class CommandManager {
     public void getCommand() {
         // läser kommando från användare
         String input = readCommand.nextLine();
-        // Omvandlar det till små bokstäver för at säkra att det alltid kommer in i
-        // samma form
+
         input = input.toLowerCase();
-        // kollar om tomt eller bara whitespace
+
         if (input.isBlank()) {
             System.out.println("enter valid input ");
             return;
@@ -52,9 +53,6 @@ public class CommandManager {
             choosenObject = "";
         }
 
-        // Tilldelar kommando och objekt från split
-
-        // switch istället för if vet inte vad vi vill ha
         switch (command) {
             case "open":
                 openCommand.checkKey(choosenObject);
@@ -66,8 +64,15 @@ public class CommandManager {
                 pickupCommand.pickup(choosenObject);
                 break;   
             case "say":
-                sayCommand.say(choosenObject);    
+                //sayCommand.showRiddle();    
+                sayCommand.say(choosenObject);
                 break;
+            case "search":
+                searchCommand.run(objectManager);
+                break;
+            case "exit": 
+                System.exit(0);
+                break; 
             default:
                 System.out.println("not valid command:  " + command);
                 break;

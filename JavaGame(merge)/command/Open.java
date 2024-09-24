@@ -8,8 +8,7 @@ public class Open {
     private ObjectManager objectManager;
     private KeyManager keyManager; 
     public Main main;
-    // kontruktor tar emot objectManager för att kunna hantera och
-    // söka objekt baserst på namn
+    // konstruktor tar emot objectManager för att kunna hantera och söka objekt baserst på namn
     public Open(Main main, ObjectManager objectManager, KeyManager keyManager) {
       this.main = main; 
       this.objectManager = objectManager;

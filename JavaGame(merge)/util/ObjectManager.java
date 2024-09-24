@@ -3,10 +3,13 @@ package util;
 import java.util.List;
 import java.util.ArrayList;
 import main.Main;
+
+
 public class ObjectManager {
     private List<GameObject> objects;
     public Main main;
     // initiserar lista och skapar objekt
+
     public ObjectManager(Main main) {
         this.main = main;
         objects = new ArrayList<>();
@@ -42,3 +45,4 @@ public class ObjectManager {
         return null;
     }
 }
+

@@ -27,4 +27,8 @@ public class GameObject {
    public void removeKey(){
       this.hasKey = false;
    }
+   @Override 
+   public String toString(){
+      return name;
+   }
 }

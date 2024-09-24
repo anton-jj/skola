@@ -16,7 +16,6 @@ public class Pickup {
         //this.keyCount = 0; // Initialiserar nyckelräknaren
     }
 
-
 	public void pickup(String itemType) {
         if (itemType.equalsIgnoreCase("key")){
             boolean keyFound = false; 
@@ -37,5 +36,4 @@ public class Pickup {
             System.out.println("Unvalid type");
         }
     }
-
 }
