@@ -1,7 +1,7 @@
 package player;
-import java.util.Scanner;
-
-import util.*;
+import util.GameObject;
+import util.ObjectManager;
+import util.printUtil;
  
 
 
@@ -11,9 +11,8 @@ public class Player {
 
     public Player(ObjectManager objectManager) {
         this.objectManager = objectManager;
-         this.keyCount = 0;
+        this.keyCount = 0;
     }
-  
 
     public int getKeyCount() {
         return keyCount;
@@ -57,8 +56,10 @@ public class Player {
     }
 
     public void search(){
+        System.out.print("You find \n");
         for(GameObject obj : objectManager.getObjects()){
-        System.out.printf("%s \n", obj.getName());
+        printUtil.typeWriter(obj.getName());
+        System.out.print("\n");
         }
     }
     public void talk(Npc npc) {

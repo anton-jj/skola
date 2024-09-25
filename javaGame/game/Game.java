@@ -1,9 +1,11 @@
 package game;
 
-import util.ObjectManager;
+import java.util.Scanner;
+
 import player.Npc;
 import player.Player;
-import java.util.Scanner;
+import util.ObjectManager;
+import util.printUtil;
 
 public class Game {
     private final ObjectManager objectManager;
@@ -21,8 +23,6 @@ public class Game {
 
     public void start() {
         boolean playing = true;
-        System.out.println("Välkommen till Spelet!");
-
         while (player.getKeyCount() != 2 && playing) {
             String input = scanner.nextLine().toLowerCase();
             if (input.isBlank()) {
@@ -65,6 +65,7 @@ public class Game {
     }
 
     private void displayHelp() {
-        System.out.println("Type the command \n 1. 'Help' \n 2. 'Open' \n 3. 'Pickup' \n 4. 'Say' \n 5. 'Exit'");
+        String help = "Type the command \n 1. 'Help' \n 2. 'Open' \n 3. 'Pickup' \n 4. 'Say' \n 5. 'Exit'";
+        System.out.print(printUtil.frame(help));
     }
 }

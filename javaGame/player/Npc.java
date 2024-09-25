@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Npc {
     String riddle; 
     String[] hints = {"it's sweet", "it's cut in half", "yes", "this is a riddle", "stopid"};
-    String[] messages =  {"What do you want", "nononoon", "something", "message", "something"};       
+    String[] messages =  {"What do you want", "nononoon", "something", "message", "something"};
     Scanner scanner;
     String answer = "half watermelon";
     public Npc(){
