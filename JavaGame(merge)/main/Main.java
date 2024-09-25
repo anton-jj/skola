@@ -22,10 +22,11 @@ public class Main {
         // skapar main 
         Main main = new Main();
         // printar en start av speleet
-        System.out.println("Welcome to the Game!");
-        System.out.println("You wake up in a deserted house. To get out, you need to find 3 keys that are hidden");
-        System.out.println("In the house there are various objects to search through to find the keys.");
-        System.out.println("Type 'help' to show the different commands.");
+        System.out.println("""
+                Welcome to the Game!
+                You wake up in a deserted house. To get out, you need to find 3 keys that are hidden
+                In the house there are various objects to search through to find the keys.
+                Type 'help' to show the different commands.""");
         // håller koll på om gåtan ska visas eller inte 
         boolean showriddle = true;
         /**¨

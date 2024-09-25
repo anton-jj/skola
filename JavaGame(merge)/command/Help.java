@@ -9,7 +9,7 @@ public class Help {
     }
 
     public void help() {
-        System.out.println("Type the command \n 1. 'Help' \n 2. 'Search' \n 3. 'Open' \n 4. 'Pick up' \n 5. 'Say' \n 6. 'Exit'" );
+        System.out.println("Available commands\n'Help'\n'Search'\n'Open'\n'Pickup'\n'Say'\n'Exit'" );
     }
     
 }

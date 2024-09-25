@@ -9,11 +9,7 @@ public class Open {
     private ObjectManager objectManager;
     private KeyManager keyManager;
     public Main main;
-    /**
-     * @param main
-     * @param objectManager
-     * @param keyManager
-     */
+
     public Open(Main main, ObjectManager objectManager, KeyManager keyManager) {
         this.main = main;
         this.objectManager = objectManager;
