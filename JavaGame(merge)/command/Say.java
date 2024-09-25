@@ -15,7 +15,6 @@ public class Say {
     }
 
     public void say(String input) {
-        System.out.println(count);
         if (input.equalsIgnoreCase(answer)) {
             System.out.println("correct");
             main.commandManager.getKeyManager().incrementKey();
@@ -24,28 +23,28 @@ public class Say {
         }
         if (count == 1) {
             System.out.println("hint: " + hints[0]);
-        } else if (count == 2) {
+        } else if (count == 2 && !input.equalsIgnoreCase(answer)) {
             System.out.println("hints: " + hints[1]);
-        } else {
+        } else if (!input.equalsIgnoreCase(answer)){
             System.out.println("u dead");
             System.exit(0);
         }
-        count++;
     }
 
     public void showRiddle() {
         System.out.println("""
-            Fruit that has the color green on the outside, red on the inside and black seeds.
+            -------------------------------------------------------------------------------------
+            Say fruit that has the color green on the outside, red on the inside and black seeds.
             The first letter of the fruit's name begins with H! What is the name of the fruit?
-                    """);
+            You have 3 tries to guess get it right!
+            -------------------------------------------------------------------------------------""");
     }
 
     public void oldMan() {
         System.out.println("""
             A mysterious old man appears from the darkness.
             In his hand he carries the last key.
-            He says: To get the final key you'll have to answer one riddle...
-                    """);
+            He says: To get the final key you'll have to answer one riddle...""");
     }
 }
 

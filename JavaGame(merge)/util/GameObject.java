@@ -9,15 +9,12 @@ public class GameObject {
    public GameObject(String name, boolean hasKey) {
       this.name = name;
       this.hasKey = hasKey;
-
    }
-
    // getter returnerar namn på objekt
    public String getName() {
       return name;
    }
-
-   // returnerar värdet åp om objekt har nyckel eller int e
+   // returnerar värdet på om objekt har nyckel eller inte
    public boolean hasKey() {
       return hasKey;
    }

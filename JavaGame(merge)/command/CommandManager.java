@@ -17,28 +17,25 @@ public class CommandManager {
     public Say sayCommand;
     public Pickup pickupCommand;
     public ObjectManager objectManager;
-    public SearchCommand searchCommand;
+    public Search searchCommand;
 
     public CommandManager(Main main) {
         // initsierar kammandon och objekthanterare och skickar main för interageras med
         // olika delar av spoelet
-        this.objectManager = main.getObjectManager();
+        objectManager = main.objectManager;
         readCommand = new Scanner(System.in);
-        keyManager = new KeyManager(main);
+        keyManager = new KeyManager();
         openCommand = new Open(main, objectManager, keyManager);
-        helpCommand = new Help(main);
+        helpCommand = new Help();
         sayCommand = new Say(main);
         pickupCommand = new Pickup(main, objectManager, keyManager);
-        searchCommand = new SearchCommand(main);
-
+        searchCommand = new Search();
     }
-
     // returnerar KeyMAnagern för att hantera nycklar i spelet.
     // dettta reurnerar en keymanager instans
     public KeyManager getKeyManager() {
         return keyManager;
     }
-
     /**
      * ansvarar för att ta emot input samnt
      * validera inputen
@@ -76,18 +73,21 @@ public class CommandManager {
                 pickupCommand.pickup(choosenObject);
                 break;
             case "say":
+                if(keyManager.getKeyCount() < 2){
+                    System.out.println("Who are ypu talking to?");
+                    break;
+                }
                 sayCommand.say(choosenObject);
                 break;
             case "search":
-                searchCommand.run(objectManager);
+                searchCommand.search(objectManager);
                 break;
             case "exit":
                 System.exit(0);
                 break;
             default:
-                System.out.println("not valid command:  " + command);
+                System.out.println("not valid command: " + command + "\nTry 'help'");
                 break;
-
         }
     }
 }

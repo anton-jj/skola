@@ -14,7 +14,6 @@ public class ObjectManager {
         objects = new ArrayList<>(); // initsierar en lista med objekt
         createObjects(); // skapar objekt när objectmanager initieras och lägger till dem i lista n
     }
-
     // skapa objekt lista
     private void createObjects() {
         objects.add(new GameObject("Chest", false));
@@ -23,15 +22,12 @@ public class ObjectManager {
         objects.add(new GameObject("Oven", false));
         objects.add(new GameObject("Cookie Jar", true));
         objects.add(new GameObject("Cabinet", false));
-
         // bara att lägga till fler om vi vill ha
     }
-
     // returnerar listan för att tillgäglig alla
     public List<GameObject> getObjects() {
         return objects;
     }
-
     // Returnerar ett GameObject som matchar med angivet namn, eller null om inget
     // hittas
     public GameObject objectsbyName(String name) {

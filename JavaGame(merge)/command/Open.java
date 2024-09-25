@@ -15,22 +15,19 @@ public class Open {
         this.objectManager = objectManager;
         this.keyManager = keyManager;
     }
-
     public void checkKey(String objectName) {
-        if (objectManager == null) {
-            System.out.println("ObjectManager is not initialized.");
-            return;
-        }
+       // if (objectManager == null) {
+       //     System.out.println("ObjectManager is not initialized.");
+       //     return;
+       // }
         GameObject obj = objectManager.objectsbyName(objectName);
-
         if (obj != null) {
             if (obj.hasKey()) {
                 obj.visableKey();
                 keyManager.addVisableKeys(obj);
                 System.out.println("Key found in " + obj.getName());
-
             } else {
-                System.out.println("Key not found " + obj.getName());
+                System.out.println("Nothing found in " + obj.getName() + "\nTry something else ");
             }
         } else {
             System.out.println("usage: open <object> \n type help for help");

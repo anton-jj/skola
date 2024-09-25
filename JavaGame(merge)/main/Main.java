@@ -27,11 +27,10 @@ public class Main {
                 You wake up in a deserted house. To get out, you need to find 3 keys that are hidden
                 In the house there are various objects to search through to find the keys.
                 Type 'help' to show the different commands.""");
-        // håller koll på om gåtan ska visas eller inte 
         boolean showriddle = true;
         /**¨
          * huvud loop för spelet
-         * medans denna körs så spelar man spelet  
+         * medans denna körs så spelar man spelet
          */
         while (main.playing) {
             /**
@@ -56,15 +55,5 @@ public class Main {
                 main.playing = false;
             }
         }
-    }
-    /**
-     * returnerar commandmanager och ObjektManager för att använda endast dessa i resten av preogrammet 
-     */
-    public CommandManager getCommandManager() {
-        return commandManager;
-    }
-
-    public ObjectManager getObjectManager() {
-        return objectManager;
     }
 }
