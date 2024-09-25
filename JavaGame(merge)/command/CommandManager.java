@@ -31,7 +31,7 @@ public class CommandManager {
         pickupCommand = new Pickup(main, objectManager, keyManager);
         searchCommand = new Search();
     }
-    // returnerar KeyMAnagern för att hantera nycklar i spelet.
+    // returnerar KeyManagern för att hantera nycklar i spelet.
     // dettta reurnerar en keymanager instans
     public KeyManager getKeyManager() {
         return keyManager;
@@ -44,14 +44,11 @@ public class CommandManager {
     public void getCommand() {
         String input = readCommand.nextLine();
         input = input.toLowerCase();
-
         if (input.isBlank()) {
-            System.out.println("enter valid input ");
+            System.out.println("Enter valid input ");
             return;
         }
-
         String[] parts = input.split(" ", 2);
-
         String command = parts[0]; // kommandot
         String choosenObject;
         if (parts.length > 1) {
@@ -74,7 +71,7 @@ public class CommandManager {
                 break;
             case "say":
                 if(keyManager.getKeyCount() < 2){
-                    System.out.println("Who are ypu talking to?");
+                    System.out.println("Who are you talking to?");
                     break;
                 }
                 sayCommand.say(choosenObject);

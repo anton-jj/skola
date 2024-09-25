@@ -24,7 +24,6 @@ public class KeyManager {
             keyCount++;
         }
     }
-
     public int incrementKey() {
         return keyCount++;
     }

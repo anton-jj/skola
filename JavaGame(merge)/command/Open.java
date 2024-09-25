@@ -16,10 +16,6 @@ public class Open {
         this.keyManager = keyManager;
     }
     public void checkKey(String objectName) {
-       // if (objectManager == null) {
-       //     System.out.println("ObjectManager is not initialized.");
-       //     return;
-       // }
         GameObject obj = objectManager.objectsbyName(objectName);
         if (obj != null) {
             if (obj.hasKey()) {
