@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+
 public class FinanceManger {
     public ArrayList<Transaction> transactions;
     private double balance;
@@ -33,6 +34,7 @@ public class FinanceManger {
             }
         }
     }
+    // behöv eller nej ?
     private void updateBalance(Transaction transaction) {
         if (transaction.getType() == Transaction.TransactionType.INCOME) {
             balance += transaction.getAmount();
@@ -113,6 +115,7 @@ public class FinanceManger {
     public void report() {
         if (transactions.isEmpty()) {
             System.out.print("there is no transaction to show\n");
+            return;
         }
         Scanner scanner = new Scanner(System.in);
         System.out.print("Select what you want to see: \n"
@@ -169,11 +172,20 @@ public class FinanceManger {
     private void printTransactions(List<Transaction> transactions, String header) {
         if (transactions.isEmpty()) {
             System.out.print("There is no transactions for this period to show\n");
+            return;
         }
+        double income = 0;
+        double expense = 0;
         System.out.print(header + "\n");
         for (Transaction t : transactions) {
             System.out.printf("%s - %.2f (Date: %s)%n", t.getDescription(), t.getAmount(), t.getDate());
+            if (t.getType() == Transaction.TransactionType.INCOME){
+                income += t.getAmount();
+            }else {
+                expense += t.getAmount();
+            }
         }
+        System.out.printf("Income during period: %.2f\nExpenses during period: %.2f\n", income, expense);
     }
 
     public Transaction.TransactionType setType(Scanner scanner) {
