@@ -7,9 +7,6 @@ import util.KeyManager;
 import util.ObjectManager;
 
 public class CommandManager {
-    /**
-     * skapar klasser och objekt för olika kommandon
-     */
     public Scanner readCommand;
     public Open openCommand;
     public Help helpCommand;
@@ -20,8 +17,6 @@ public class CommandManager {
     public Search searchCommand;
 
     public CommandManager(Main main) {
-        // initsierar kammandon och objekthanterare och skickar main för interageras med
-        // olika delar av spoelet
         objectManager = main.objectManager;
         readCommand = new Scanner(System.in);
         keyManager = new KeyManager();
@@ -31,34 +26,25 @@ public class CommandManager {
         pickupCommand = new Pickup(main, objectManager, keyManager);
         searchCommand = new Search();
     }
-    // returnerar KeyManagern för att hantera nycklar i spelet.
-    // dettta reurnerar en keymanager instans
+
     public KeyManager getKeyManager() {
         return keyManager;
     }
-    /**
-     * ansvarar för att ta emot input samnt
-     * validera inputen
-     * samt anropar lämplig metod baserat på det
-     */
     public void getCommand() {
         String input = readCommand.nextLine();
-        input = input.toLowerCase();
+        input = input.toLowerCase().trim();
         if (input.isBlank()) {
             System.out.println("Enter valid input ");
             return;
         }
         String[] parts = input.split(" ", 2);
-        String command = parts[0]; // kommandot
+        String command = parts[0];
         String choosenObject;
         if (parts.length > 1) {
-            choosenObject = parts[1]; // objektet som användaren valt
+            choosenObject = parts[1]; 
         } else {
             choosenObject = "";
         }
-        /**
-         * switch för att anropa metoder per kommando
-         */
         switch (command) {
             case "open":
                 openCommand.checkKey(choosenObject);
@@ -70,7 +56,7 @@ public class CommandManager {
                 pickupCommand.pickup(choosenObject);
                 break;
             case "say":
-                if(keyManager.getKeyCount() < 2){
+                if (keyManager.getKeyCount() < 2) {
                     System.out.println("Who are you talking to?");
                     break;
                 }

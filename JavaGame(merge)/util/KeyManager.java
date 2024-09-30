@@ -5,18 +5,20 @@ import java.util.Set;
 
 public class KeyManager {
 
-    private Set<GameObject> visableKeys; // mängden av synliga nycklar
-    private int keyCount; // räknare för antealet hittade nycklar
+    private Set<GameObject> visableKeys; 
+    private int keyCount; 
+
     public KeyManager() {
         this.visableKeys = new HashSet<>();
         this.keyCount = 0;
     }
-    // lägg till nyckel till dem synliga om objektet har en nyckel
+
     public void addVisableKeys(GameObject obj) {
         if (obj.hasKey()) {
             visableKeys.add(obj);
         }
     }
+
     public void removeKey(GameObject obj) {
         if (visableKeys.contains(obj)) {
             visableKeys.remove(obj);
@@ -24,6 +26,7 @@ public class KeyManager {
             keyCount++;
         }
     }
+
     public int incrementKey() {
         return keyCount++;
     }

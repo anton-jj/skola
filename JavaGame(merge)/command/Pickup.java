@@ -9,30 +9,29 @@ public class Pickup {
     private KeyManager keyManager;
     public Main main;
 
-    public Pickup( Main main, ObjectManager objectManager, KeyManager keyManager) {
+    public Pickup(Main main, ObjectManager objectManager, KeyManager keyManager) {
         this.main = main;
         this.objectManager = objectManager;
         this.keyManager = keyManager;
-        //this.keyCount = 0; // Initialiserar nyckelräknaren
     }
 
-	public void pickup(String itemType) {
-        if (itemType.equalsIgnoreCase("key")){
+    public void pickup(String itemType) {
+        if (itemType.equalsIgnoreCase("key")) {
             boolean keyFound = false;
-            // fixa pickup alla nycklar
-            for (GameObject obj : objectManager.getObjects()){
-                if(obj.hasKey() && keyManager.isKeyVisable(obj)){
+            for (GameObject obj : objectManager.getObjects()) {
+                if (obj.hasKey() && keyManager.isKeyVisable(obj)) {
                     obj.removeKey();
                     keyManager.incrementKey();
                     keyFound = true;
-                System.out.println("Key is picked up from " + obj.getName());
-                break;
+                    System.out.println("Key is picked up from " + obj.getName());
+                    break;
+                }
             }
-        }if (!keyFound){
+            if (!keyFound) {
                 System.out.println("Theres no key to pick up");
             }
-        }else {
-            System.out.println("Unvalid type");
+        } else {
+            System.out.println("Unvalid type\nYou can only pickup keys");
         }
     }
 }

@@ -17,6 +17,7 @@ public class Main {
         // meny
         while (true) {
             displayMenu();
+            
             int choice = getUserChoice(scanner);
             switch (choice) {
                 case 1:

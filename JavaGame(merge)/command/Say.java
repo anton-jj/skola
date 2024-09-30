@@ -18,15 +18,15 @@ public class Say {
         if (input.equalsIgnoreCase(answer)) {
             System.out.println("correct");
             main.commandManager.getKeyManager().incrementKey();
-        }else if (!input.equalsIgnoreCase(answer) && count < 3) {
+        } else if (!input.equalsIgnoreCase(answer) && count < 3) {
             System.out.println("Wrong answer, Try again!");
         }
         if (count <= 1 && !input.equalsIgnoreCase(answer)) {
             System.out.println("hint: " + hints[0]);
         } else if (count <= 2 && !input.equalsIgnoreCase(answer)) {
             System.out.println("hints: " + hints[1]);
-        } else if (!input.equalsIgnoreCase(answer)){
-            System.out.println("u dead");
+        } else if (!input.equalsIgnoreCase(answer)) {
+            System.out.println("Game over!");
             System.exit(0);
         }
         count++;
@@ -34,28 +34,17 @@ public class Say {
 
     public void showRiddle() {
         System.out.println("""
-            -------------------------------------------------------------------------------------
-            Say a fruit that has the color green on the outside, red on the inside and black seeds.
-            The first letter of the fruit's name begins with H! What is the name of the fruit?
-            You have 3 tries to guess get it right!
-            -------------------------------------------------------------------------------------""");
+                -------------------------------------------------------------------------------------
+                Say a fruit that has the color green on the outside, red on the inside and black seeds.
+                The first letter of the fruit's name is H! What is the name of the fruit?
+                You have 3 tries to guess get it right!
+                -------------------------------------------------------------------------------------""");
     }
 
     public void oldMan() {
         System.out.println("""
-            A mysterious old man appears from the darkness.
-            In his hand he carries the last key.
-            He says: To get the final key you'll have to answer one riddle...""");
+                A mysterious old man appears from the darkness.
+                In his hand he carries the last key.
+                He says: To get the final key you'll have to answer one riddle...""");
     }
 }
-
-/*
- * A mysterious old man appears from the darkness.
- * In his hand he carries the last key. He says:
- * "To get the final key you'll have to answer one riddle..."
- *
- * Fruit that has the color green on the outside, red on the inside, and black
- * seeds.
- * The first letter of the fruit's name begins with H! What is the name of the
- * fruit?
- */
