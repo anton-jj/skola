@@ -2,7 +2,6 @@ package game;
 
 import java.util.Scanner;
 
-import player.Npc;
 import player.Player;
 import util.printUtil;
 
@@ -10,13 +9,11 @@ public class Game {
     private final Player player;
     private Room currentRoom;
     private final Scanner scanner;
-    private final Npc npc;
 
     public Game() {
+        setupRooms();
         this.player = new Player(currentRoom);
         this.scanner = new Scanner(System.in);
-        this.npc = null;
-        setupRooms();
     }
     private void setupRooms(){
         Room hall = new Hall();

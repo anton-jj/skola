@@ -92,8 +92,6 @@ public class Player {
         }
     }
 
-   
-
     public int incrementKey() {
         return keyCount++;
     }
@@ -103,7 +101,7 @@ public class Player {
         
         if (nextRoom != null){
             currentRoom = nextRoom;
-            System.out.println("you moved to " + currentRoom);
+            System.out.println("you moved to " + currentRoom.getName());
             System.out.println(currentRoom.getDescription());
         }else {
             System.out.println("you cant go that way");
