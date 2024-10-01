@@ -1,39 +1,46 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import player.FriendlyGhost;
 import player.Player;
-import util.printUtil;
 
 public class Game {
     private final Player player;
     private Room currentRoom;
     private final Scanner scanner;
-
+    private FriendlyGhost friendlyGhost;
+    private ArrayList<Room> rooms;
     public Game() {
+        this.rooms = new ArrayList<>();
         setupRooms();
         this.player = new Player(currentRoom);
         this.scanner = new Scanner(System.in);
+        this.friendlyGhost = new FriendlyGhost(this);
     }
+
     private void setupRooms(){
         Room hall = new Hall();
         Room kitchen = new Kitchen();
+        Room livingRoom = new LivingRoom();
+        Room washroom = new WashRoom();
+        rooms.add(kitchen);
+        rooms.add(hall);
+        rooms.add(livingRoom);
+        rooms.add(washroom);
+
+        // fixa move command så man kan gå mellan olika rum nu ör det en cirkel living room -> hall -> kitchen -> livingroom
         
-        hall.setExit("kitchen", kitchen);
-        kitchen.setExit("hall", hall);
-        
-        currentRoom = hall;
+        currentRoom = livingRoom;
+
     }
+
     public void start() {
         boolean playing = true;
         while (player.getKeyCount() != 2 && playing) {
-            String input = scanner.nextLine().toLowerCase();
-            if (input.isBlank()) {
-                System.out.println("Enter valid input");
-                continue;
-            }
 
-            String[] parts = input.split(" ", 2);
+            String[] parts = handleINput();
             String command = parts[0];
             String argument = (parts.length > 1) ? parts[1] : "";
 
@@ -42,12 +49,10 @@ public class Game {
                     player.open(argument);
                     break;
                 case "help":
-                    displayHelp();
+                    friendlyGhost.provideHelp();
                     break;
                 case "pickup":
                     player.pickup(argument);
-                    break;
-                case "say":
                     break;
                 case "look":
                     player.look();
@@ -58,22 +63,31 @@ public class Game {
                 case "exit":
                     playing = false;
                     break;
-                case "talk":
-                    //player.talk(npc);
+                case "go": 
+                    player.go(argument, getRooms());
                     break;
-                    case "move":
-                    player.move(argument); // Implementera move-metod i Player
+                case "talk":
+                    friendlyGhost.showMenu();
                     break;
                 default:
                     System.out.println("Not valid command: " + command);
                     break;
             }
-
         }
     }
+    private String[] handleINput(){
+            String input = scanner.nextLine().toLowerCase();
+            if (input.isBlank()) {
+                System.out.println("Enter valid input");
+            }
 
-    private void displayHelp() {
-        String help = "Type the command \n 1. 'Help' \n 2. 'Open' \n 3. 'Pickup' \n 4. 'Say' \n 5. 'Exit'";
-        System.out.print(printUtil.frame(help));
+            String[] parts = input.split(" ", 2);
+            return parts;
+    }
+    public ArrayList<Room> getRooms(){
+        return rooms;
+    }
+    public Player getPlayer(){
+        return player;
     }
 }

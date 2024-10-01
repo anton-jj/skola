@@ -1,5 +1,7 @@
 package player;
 
+import java.util.ArrayList;
+
 import game.Room;
 import util.GameObject;
 import util.ObjectManager;
@@ -18,7 +20,9 @@ public class Player {
     public int getKeyCount() {
         return keyCount;
     }
-
+    public Room getCurentRoom(){
+        return currentRoom;
+    }
     public void pickup(String itemType) {
         ObjectManager objectManager = currentRoom.getObjectManager();
         if (itemType.equalsIgnoreCase("key")) {
@@ -46,6 +50,7 @@ public class Player {
         GameObject obj = objectManager.objectsbyName(objectName);
         if (obj == null) {
             System.out.println("Input valid object");
+            return;
         }
         if (obj.getOpen()) {
             System.out.println(obj.getOpen());
@@ -96,17 +101,17 @@ public class Player {
         return keyCount++;
     }
     
-    public void move(String direction) {
-        Room nextRoom = currentRoom.getExit(direction);
+    public void go(String roomName,ArrayList<Room> rooms) {
         
-        if (nextRoom != null){
-            currentRoom = nextRoom;
-            System.out.println("you moved to " + currentRoom.getName());
-            System.out.println(currentRoom.getDescription());
-        }else {
-            System.out.println("you cant go that way");
+        for (Room room : rooms){
+            if (room.getName().equalsIgnoreCase(roomName)) {
+                currentRoom = room; 
+                System.out.println("you moved to " + currentRoom.getName());
+                System.out.println(currentRoom.getDescription());
+                return;
+            }
         }
-
+        System.out.println("Room not found " + roomName);
     }
     public void talk(){
         System.out.println("not implmented");

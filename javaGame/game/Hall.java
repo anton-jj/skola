@@ -1,10 +1,9 @@
 package game;
 
 import util.GameObject;
-
 public class Hall extends Room {
     public Hall(){
-        super("Hall", "a dimy lit room");
+        super(RoomName.HALL);
     }
     @Override
     protected void createObjects(){

@@ -4,7 +4,7 @@ import util.GameObject;
 
 public class Kitchen extends Room {
     public Kitchen(){
-        super("kitchen", "A dusty abonded kitchen");
+        super(RoomName.KITCHEN);
     }
 
     @Override
