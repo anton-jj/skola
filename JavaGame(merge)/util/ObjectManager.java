@@ -6,13 +6,14 @@ import java.util.List;
 import main.Main;
 
 public class ObjectManager {
+
     private List<GameObject> objects;
-    public Main main; 
+    public Main main;
 
     public ObjectManager(Main main) {
-        this.main = main; 
-        objects = new ArrayList<>(); 
-        createObjects(); 
+        this.main = main;
+        objects = new ArrayList<>();
+        createObjects();
     }
 
     private void createObjects() {
@@ -29,6 +30,7 @@ public class ObjectManager {
     }
 
     public GameObject objectsbyName(String name) {
+
         for (GameObject obj : objects) {
             if (obj.getName().equalsIgnoreCase(name)) {
                 return obj;

@@ -1,15 +1,16 @@
 package command;
+
 import main.Main;
 import util.GameObject;
 import util.KeyManager;
 import util.ObjectManager;
 
-public class Pickup {
+public class PickupCommand {
     private ObjectManager objectManager;
     private KeyManager keyManager;
     public Main main;
 
-    public Pickup(Main main, ObjectManager objectManager, KeyManager keyManager) {
+    public PickupCommand(Main main, ObjectManager objectManager, KeyManager keyManager) {
         this.main = main;
         this.objectManager = objectManager;
         this.keyManager = keyManager;
@@ -27,6 +28,7 @@ public class Pickup {
                     break;
                 }
             }
+
             if (!keyFound) {
                 System.out.println("Theres no key to pick up");
             }

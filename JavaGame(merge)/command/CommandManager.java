@@ -8,43 +8,48 @@ import util.ObjectManager;
 
 public class CommandManager {
     public Scanner readCommand;
-    public Open openCommand;
-    public Help helpCommand;
+    public OpenCommand openCommand;
+    public HelpCommand helpCommand;
     private KeyManager keyManager;
-    public Say sayCommand;
-    public Pickup pickupCommand;
+    public SayCommand sayCommand;
+    public PickupCommand pickupCommand;
     public ObjectManager objectManager;
-    public Search searchCommand;
+    public SearchCommand searchCommand;
 
     public CommandManager(Main main) {
         objectManager = main.objectManager;
         readCommand = new Scanner(System.in);
         keyManager = new KeyManager();
-        openCommand = new Open(main, objectManager, keyManager);
-        helpCommand = new Help();
-        sayCommand = new Say(main);
-        pickupCommand = new Pickup(main, objectManager, keyManager);
-        searchCommand = new Search();
+        openCommand = new OpenCommand(main, objectManager, keyManager);
+        helpCommand = new HelpCommand();
+        sayCommand = new SayCommand(main);
+        pickupCommand = new PickupCommand(main, objectManager, keyManager);
+        searchCommand = new SearchCommand();
     }
 
     public KeyManager getKeyManager() {
         return keyManager;
     }
+
     public void getCommand() {
         String input = readCommand.nextLine();
         input = input.toLowerCase().trim();
+
         if (input.isBlank()) {
             System.out.println("Enter valid input ");
             return;
         }
+
         String[] parts = input.split(" ", 2);
         String command = parts[0];
         String choosenObject;
+
         if (parts.length > 1) {
-            choosenObject = parts[1]; 
+            choosenObject = parts[1];
         } else {
             choosenObject = "";
         }
+
         switch (command) {
             case "open":
                 openCommand.checkKey(choosenObject);

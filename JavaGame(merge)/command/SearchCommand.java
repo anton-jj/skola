@@ -2,7 +2,8 @@ package command;
 
 import util.ObjectManager;
 
-public class Search {
+public class SearchCommand {
+
     public void search(ObjectManager objectManager) {
         System.out.println("You see: ");
         for (Object obj : objectManager.getObjects()) {

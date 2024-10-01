@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class KeyManager {
 
-    private Set<GameObject> visableKeys; 
-    private int keyCount; 
+    private Set<GameObject> visableKeys;
+    private int keyCount;
 
     public KeyManager() {
         this.visableKeys = new HashSet<>();

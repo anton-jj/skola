@@ -2,25 +2,27 @@ package command;
 
 import main.Main;
 
-public class Say {
+public class SayCommand {
     public Main main;
     public String answer;
     public int count;
     String[] hints = { "it's sweet", "it's split in two " };
 
-    public Say(Main main) {
+    public SayCommand(Main main) {
         this.main = main;
         this.answer = "half watermelon";
         this.count = 1;
     }
 
     public void say(String input) {
+
         if (input.equalsIgnoreCase(answer)) {
             System.out.println("correct");
             main.commandManager.getKeyManager().incrementKey();
         } else if (!input.equalsIgnoreCase(answer) && count < 3) {
             System.out.println("Wrong answer, Try again!");
         }
+
         if (count <= 1 && !input.equalsIgnoreCase(answer)) {
             System.out.println("hint: " + hints[0]);
         } else if (count <= 2 && !input.equalsIgnoreCase(answer)) {

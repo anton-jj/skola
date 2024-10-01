@@ -1,7 +1,7 @@
 package command;
 import main.Main;
 
-public class Help {
+public class HelpCommand {
     public Main main;
 
     public void help() {
