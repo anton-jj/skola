@@ -18,12 +18,13 @@ public class FriendlyGhost extends Npc {
     }
     public void showMenu() {
         boolean showMenu = true; 
+        printUtil.typeWriter(printUtil.GameMessages.NPC_GHOST_HELP.getMessage());
         while(showMenu) {
             System.out.println("""
-                    What would you like to do? 
-                    1. help 
+                    What would you like to do?
+                    1. help
                     2. map
-                    3. talk 
+                    3. talk
                     4. exit menu
                     """);
             
@@ -45,7 +46,6 @@ public class FriendlyGhost extends Npc {
                         default:
                             System.out.println("Invalid choice");
                     }
-
         }
 
     }
@@ -53,16 +53,16 @@ public class FriendlyGhost extends Npc {
     public void interact() {
         int index = random.nextInt(4);
         switch (index){
-            case 1: 
+            case 1:
                 printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_1.getMessage());
                 break;
-            case 2: 
+            case 2:
                 printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_2.getMessage());
                 break;
-            case 3: 
+            case 3:
                 printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_3.getMessage());
                 break;
-            case 4: 
+            case 4:
                 printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_4.getMessage());
                 break;
         }

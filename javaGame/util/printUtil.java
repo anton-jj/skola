@@ -1,6 +1,8 @@
 package util;
-
+import player.*;
 public class printUtil {
+    
+
     public static void typeWriter(String text) {
         int i;
         for (i = 0; i < text.length(); i++) {
@@ -11,12 +13,13 @@ public class printUtil {
                 System.out.println("something went wrong");
             }
         }
+        System.out.print("\n");
     }
 
     public static void frame(String text) {
         System.out.println("================================\n" +
                             text + "\n" +
-                "================================\n");
+                "================================");
     }
 
     public static enum GameMessages {
@@ -59,6 +62,9 @@ public class printUtil {
                     1. Use 'look' to see what's around you.
                     2. Type 'move <direction>' to navigate to a new room.
                     3. Don't forget to 'talk' to me for more tips!
+                    4. Use 'go' to move to a diffrent room
+                    5. Use 'open' or 'search' to find keys from objects
+                    6. Use pickup to get the key you found
                 """),
 
         // Game state messages
