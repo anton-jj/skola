@@ -6,7 +6,7 @@ public abstract class Room {
     protected ObjectManager objectManager;
     
     public Room(RoomName name){
-        this.name = name; 
+        this.name = name;
         this.objectManager = new ObjectManager();
         createObjects();
     }

@@ -102,10 +102,9 @@ public class Player {
     }
     
     public void go(String roomName,ArrayList<Room> rooms) {
-        
         for (Room room : rooms){
             if (room.getName().equalsIgnoreCase(roomName)) {
-                currentRoom = room; 
+                currentRoom = room;
                 System.out.println("you moved to " + currentRoom.getName());
                 System.out.println(currentRoom.getDescription());
                 return;
