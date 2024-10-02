@@ -1,5 +1,5 @@
 package util;
-import player.*;
+
 public class printUtil {
     
 
@@ -58,13 +58,13 @@ public class printUtil {
 
         // Hjälpmeddelande
         HELP_MESSAGE("""
-                    Here's some advice:
-                    1. Use 'look' to see what's around you.
-                    2. Type 'move <direction>' to navigate to a new room.
-                    3. Don't forget to 'talk' to me for more tips!
-                    4. Use 'go' to move to a diffrent room
-                    5. Use 'open' or 'search' to find keys from objects
-                    6. Use pickup to get the key you found
+                Here's some advice:
+                1. Use 'look' to see what's around you.
+                2. Type 'move <direction>' to navigate to a new room.
+                3. Don't forget to 'talk' to me for more tips!
+                4. Use 'go' to move to a diffrent room
+                5. Use 'open' or 'search' to find keys from objects
+                6. Use pickup to get the key you found
                 """),
 
         // Game state messages

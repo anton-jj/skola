@@ -93,7 +93,6 @@ public class Player {
         System.out.print("You look arotund and find\n");
         for (GameObject obj : objectManager.getObjects()) {
             printUtil.typeWriter(obj.getName());
-            System.out.print("\n");
         }
     }
 
