@@ -7,7 +7,7 @@ public class Main {
         Game game = new Game();
         
         // Starta spelet
-        printUtil.gameStart();
+        printUtil.typeWriter(printUtil.GameMessages.WELCOME_MESSAGE.getMessage());
         game.start();
     }
 }

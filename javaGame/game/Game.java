@@ -64,7 +64,7 @@ public class Game {
                     playing = false;
                     break;
                 case "go":
-                    player.,go(argument, getRooms());
+                    player.go(argument, getRooms());
                     break;
                 case "talk":
                     friendlyGhost.showMenu();

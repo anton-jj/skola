@@ -8,12 +8,6 @@ import game.Room;
 import util.printUtil;
 
 public class FriendlyGhost extends Npc {
-    private String[] messages = {
-        "Boo! need some help?",
-        "I really can guide you:)",
-        "Remeber to search around you!",
-        "You can look around to find things"
-    };
     private Random random;
     private Game game;
 
@@ -45,10 +39,10 @@ public class FriendlyGhost extends Npc {
                         case "3":
                         interact();
                         break;
-                        case "4": 
+                        case "4":
                             showMenu = false;
-                        break; 
-                        default: 
+                        break;
+                        default:
                             System.out.println("Invalid choice");
                     }
 
@@ -57,23 +51,29 @@ public class FriendlyGhost extends Npc {
     }
     @Override
     public void interact() {
-        int index = random.nextInt(messages.length);
-        printUtil.typeWriter(messages[index]);
+        int index = random.nextInt(4);
+        switch (index){
+            case 1: 
+                printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_1.getMessage());
+                break;
+            case 2: 
+                printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_2.getMessage());
+                break;
+            case 3: 
+                printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_3.getMessage());
+                break;
+            case 4: 
+                printUtil.typeWriter(printUtil.GameMessages.GHOST_TALK_4.getMessage());
+                break;
+        }
     }
     private void showMap(){
         System.out.println("You are now in " + game.getPlayer().getCurentRoom());
         for (Room room : game.getRooms()) {
-           System.out.println(room.getName()); 
+           System.out.println(room.getName());
         }
     }
     public void provideHelp() {
-        String help = printUtil.frame("""
-          Here's some advice
-          1. Use 'look' to see what's around you
-          2. Type 'move <direction>' to navigate to a new room
-          3. Type 'move <direction>' to navigate to a new room.
-          4. Don't forget to 'talk' to me for more tips!
-          """);
-        System.out.println(help);
+        printUtil.frame(printUtil.GameMessages.HELP_MESSAGE.getMessage());
     }
 }

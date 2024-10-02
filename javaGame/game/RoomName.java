@@ -1,10 +1,12 @@
 package game;
 
+import util.printUtil;
+
 public enum RoomName {
-    HALL("Hall", "a dimly lit room"),
-    KITCHEN("Kitchen", "A dusty abandoned kitchen"),
-    LIVING_ROOM("Living Room", "an abandoned living room filled with dust"),
-    WASH_ROOM("Wash room", "Sunking toilet");
+    HALL("Hall", printUtil.GameMessages.HALL_DESC.getMessage()),
+    KITCHEN("Kitchen", printUtil.GameMessages.KITCHEN_DESC.getMessage()),
+    LIVING_ROOM("Living Room", printUtil.GameMessages.LIVING_ROOM_DESC.getMessage()),
+    WASH_ROOM("Wash room", printUtil.GameMessages.WASH_ROOM_DESC.getMessage());
 
     private final String displayName;
     private final String description;
