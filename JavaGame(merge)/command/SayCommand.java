@@ -39,7 +39,7 @@ public class SayCommand {
                 -------------------------------------------------------------------------------------
                 Say a fruit that has the color green on the outside, red on the inside and black seeds.
                 The first letter of the fruit's name is H! What is the name of the fruit?
-                You have 3 tries to guess get it right!
+                You have 3 tries to get it right!
                 -------------------------------------------------------------------------------------""");
     }
 
