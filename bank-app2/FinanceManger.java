@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-
 public class FinanceManger {
     public ArrayList<Transaction> transactions;
     private double balance;
@@ -24,16 +23,18 @@ public class FinanceManger {
         calcBalance();
         return balance;
     }
-    private void calcBalance(){
+
+    private void calcBalance() {
         balance = 0;
-        for (Transaction t : transactions){
-            if(t.getType().equals(Transaction.TransactionType.INCOME)){
+        for (Transaction t : transactions) {
+            if (t.getType().equals(Transaction.TransactionType.INCOME)) {
                 balance += t.getAmount();
-            }else {
+            } else {
                 balance -= t.getAmount();
             }
         }
     }
+
     // behöv eller nej ?
     private void updateBalance(Transaction transaction) {
         if (transaction.getType() == Transaction.TransactionType.INCOME) {
@@ -134,21 +135,24 @@ public class FinanceManger {
             case 2:
                 LocalDate oneWeek = today.minusWeeks(1);
                 List<Transaction> lastWeekTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1)) && t.getDate().isBefore(today.plusDays(1)))
+                        .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1))
+                                && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
                 printTransactions(lastWeekTransactions, "Transactions last week");
                 break;
             case 3:
                 LocalDate oneMonth = today.minusMonths(1);
                 List<Transaction> lastMonthTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1)) && t.getDate().isBefore(today.plusDays(1)))
+                        .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1))
+                                && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
                 printTransactions(lastMonthTransactions, "Transactions last month");
                 break;
             case 4:
                 LocalDate oneYear = today.minusYears(1);
                 List<Transaction> lastYearTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneYear.minusDays(1)) && t.getDate().isBefore(today.plusDays(1)))
+                        .filter(t -> t.getDate().isAfter(oneYear.minusDays(1))
+                                && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
                 printTransactions(lastYearTransactions, "Transactions last year");
                 break;
@@ -179,9 +183,9 @@ public class FinanceManger {
         System.out.print(header + "\n");
         for (Transaction t : transactions) {
             System.out.printf("%s - %.2f (Date: %s)%n", t.getDescription(), t.getAmount(), t.getDate());
-            if (t.getType() == Transaction.TransactionType.INCOME){
+            if (t.getType() == Transaction.TransactionType.INCOME) {
                 income += t.getAmount();
-            }else {
+            } else {
                 expense += t.getAmount();
             }
         }
@@ -197,7 +201,6 @@ public class FinanceManger {
             } catch (IllegalArgumentException e) {
                 System.out.print("Invalid transacion type. Please enter either 'Expense' or 'Income'\n");
             }
-
         }
     }
 }
