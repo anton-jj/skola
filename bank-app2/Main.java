@@ -27,7 +27,7 @@ public class Main {
                     financeManger.removeTransaction(scanner);
                     break;
                 case 3:
-                    System.out.printf("Current balance:%s \n", financeManger.getBalance());
+                    System.out.printf("Current balance:%.2f \n", financeManger.getBalance());
                     break;
                 case 4:
                     financeManger.listTransactions();

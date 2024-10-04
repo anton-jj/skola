@@ -1,4 +1,9 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class FileManager {
@@ -16,8 +21,8 @@ public class FileManager {
 
     public ArrayList<Transaction> loadData() throws IOException, ClassNotFoundException {
         File file = new File(filename);
-        if (file.length() == 0) { // Kolla om filen är tom
-            return new ArrayList<>(); // Returnera en tom lista
+        if (file.length() == 0) {
+            return new ArrayList<>();
         }
         try (ObjectInputStream ois = new ObjectInputStream((new FileInputStream(filename)))) {
             return (ArrayList<Transaction>) ois.readObject();

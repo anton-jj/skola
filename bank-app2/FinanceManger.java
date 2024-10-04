@@ -35,24 +35,13 @@ public class FinanceManger {
         }
     }
 
-    // behöv eller nej ?
-    private void updateBalance(Transaction transaction) {
-        if (transaction.getType() == Transaction.TransactionType.INCOME) {
-            balance += transaction.getAmount();
-            System.out.println(balance);
-        } else {
-            balance -= transaction.getAmount();
-            System.out.println(balance);
-        }
-    }
-
     public void addTransaction(Scanner scanner) {
         Transaction.TransactionType type = setType(scanner);
         if (type != null) {
             Transaction transaction = createTransaction(scanner, type);
             if (transaction != null) {
                 transactions.add(transaction);
-                updateBalance(transaction);
+                calcBalance();
                 System.out.print("Transaction added\n");
             }
         }
@@ -88,11 +77,10 @@ public class FinanceManger {
 
     public void removeTransaction(Scanner scanner) {
         System.out.print("enter index of transaction to remove: ");
-        int index = scanner.nextInt() - 1;
+        int index = Integer.parseInt(scanner.nextLine()) - 1;
         if (index >= 0 && index < transactions.size()) {
-            Transaction removedTransaction = transactions.get(index);
-            updateBalance(removedTransaction);
             transactions.remove(index);
+            calcBalance();
             System.out.print("Transaction Removed\n");
         } else {
             System.out.print("Invalid index\n");
@@ -107,8 +95,8 @@ public class FinanceManger {
             System.out.print("List of transaction\n");
             for (int i = 0; i < transactions.size(); i++) {
                 Transaction t = transactions.get(i);
-                System.out.printf("%d: %s - %.2f (Date: %s)\n", i + 1, t.getDescription(), t.getAmount(), t.getDate());
-
+                System.out.printf("%d: %s %s - %.2f (Date: %s)\n", i + 1, t.getType().name(), t.getDescription(),
+                        t.getAmount(), t.getDate());
             }
         }
     }

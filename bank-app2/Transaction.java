@@ -26,7 +26,6 @@ public class Transaction implements Comparable<Transaction>, Serializable {
       return type;
    }
 
-   // getters
    public double getAmount() {
       return amount;
    }
