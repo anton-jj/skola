@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class FinanceManger {
-    public ArrayList<Transaction> transactions;
+    public ArrayList<BaseTransaction> transactions;
     private double balance;
 
     public FinanceManger() {
@@ -15,7 +15,7 @@ public class FinanceManger {
         this.balance = 0;
     }
 
-    public ArrayList<Transaction> getTransactions() {
+    public ArrayList<BaseTransaction> getTransactions() {
         return transactions;
     }
 
@@ -26,8 +26,8 @@ public class FinanceManger {
 
     private void calcBalance() {
         balance = 0;
-        for (Transaction t : transactions) {
-            if (t.getType().equals(Transaction.TransactionType.INCOME)) {
+        for (BaseTransaction t : transactions) {
+            if (t.getType().equals(BaseTransaction.TransactionType.INCOME)) {
                 balance += t.getAmount();
             } else {
                 balance -= t.getAmount();
@@ -36,9 +36,9 @@ public class FinanceManger {
     }
 
     public void addTransaction(Scanner scanner) {
-        Transaction.TransactionType type = setType(scanner);
+        BaseTransaction.TransactionType type = setType(scanner);
         if (type != null) {
-            Transaction transaction = createTransaction(scanner, type);
+            BaseTransaction transaction = createTransaction(scanner, type);
             if (transaction != null) {
                 transactions.add(transaction);
                 calcBalance();
@@ -47,7 +47,7 @@ public class FinanceManger {
         }
     }
 
-    private Transaction createTransaction(Scanner scanner, Transaction.TransactionType type) {
+    private BaseTransaction createTransaction(Scanner scanner, BaseTransaction.TransactionType type) {
         while (true) {
             System.out.println("Make tranaction (amount) (description) (date yyyy-MM-dd): ");
             String input = scanner.nextLine().trim();
@@ -66,7 +66,7 @@ public class FinanceManger {
                 String description = args[1];
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 LocalDate date = LocalDate.parse(args[2], formatter);
-                return new Transaction(amount, description, date, type);
+                return new BaseTransaction(amount, description, date, type);
             } catch (NumberFormatException e) {
                 System.out.print("Invalid amount. Please eneter  a valid number");
             } catch (DateTimeParseException e) {
@@ -94,7 +94,7 @@ public class FinanceManger {
             dateSort(transactions);
             System.out.print("List of transaction\n");
             for (int i = 0; i < transactions.size(); i++) {
-                Transaction t = transactions.get(i);
+                BaseTransaction t = transactions.get(i);
                 System.out.printf("%d: %s %s - %.2f (Date: %s)\n", i + 1, t.getType().name(), t.getDescription(),
                         t.getAmount(), t.getDate());
             }
@@ -116,13 +116,13 @@ public class FinanceManger {
         LocalDate today = LocalDate.now();
         switch (input) {
             case 1:
-                List<Transaction> todayTransactions = transactions.stream().filter(t -> t.getDate().isEqual(today))
+                List<BaseTransaction> todayTransactions = transactions.stream().filter(t -> t.getDate().isEqual(today))
                         .collect(Collectors.toList());
                 printTransactions(todayTransactions, "Transactions today");
                 break;
             case 2:
                 LocalDate oneWeek = today.minusWeeks(1);
-                List<Transaction> lastWeekTransactions = transactions.stream()
+                List<BaseTransaction> lastWeekTransactions = transactions.stream()
                         .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1))
                                 && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
@@ -130,7 +130,7 @@ public class FinanceManger {
                 break;
             case 3:
                 LocalDate oneMonth = today.minusMonths(1);
-                List<Transaction> lastMonthTransactions = transactions.stream()
+                List<BaseTransaction> lastMonthTransactions = transactions.stream()
                         .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1))
                                 && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
@@ -138,7 +138,7 @@ public class FinanceManger {
                 break;
             case 4:
                 LocalDate oneYear = today.minusYears(1);
-                List<Transaction> lastYearTransactions = transactions.stream()
+                List<BaseTransaction> lastYearTransactions = transactions.stream()
                         .filter(t -> t.getDate().isAfter(oneYear.minusDays(1))
                                 && t.getDate().isBefore(today.plusDays(1)))
                         .collect(Collectors.toList());
@@ -148,12 +148,12 @@ public class FinanceManger {
 
     }
 
-    private void dateSort(ArrayList<Transaction> tranactions) {
+    private void dateSort(ArrayList<BaseTransaction> tranactions) {
         int n = tranactions.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - 1; j++) {
                 if (transactions.get(j).compareTo(tranactions.get(j + 1)) > 0) {
-                    Transaction temp = tranactions.get(j);
+                    BaseTransaction temp = tranactions.get(j);
                     transactions.set(j, tranactions.get(j + 1));
                     transactions.set(j + 1, temp);
                 }
@@ -161,7 +161,7 @@ public class FinanceManger {
         }
     }
 
-    private void printTransactions(List<Transaction> transactions, String header) {
+    private void printTransactions(List<BaseTransaction> transactions, String header) {
         if (transactions.isEmpty()) {
             System.out.print("There is no transactions for this period to show\n");
             return;
@@ -169,9 +169,9 @@ public class FinanceManger {
         double income = 0;
         double expense = 0;
         System.out.print(header + "\n");
-        for (Transaction t : transactions) {
+        for (BaseTransaction t : transactions) {
             System.out.printf("%s - %.2f (Date: %s)%n", t.getDescription(), t.getAmount(), t.getDate());
-            if (t.getType() == Transaction.TransactionType.INCOME) {
+            if (t.getType() == BaseTransaction.TransactionType.INCOME) {
                 income += t.getAmount();
             } else {
                 expense += t.getAmount();
@@ -180,15 +180,17 @@ public class FinanceManger {
         System.out.printf("Income during period: %.2f\nExpenses during period: %.2f\n", income, expense);
     }
 
-    public Transaction.TransactionType setType(Scanner scanner) {
+    public BaseTransaction.TransactionType setType(Scanner scanner) {
         while (true) {
             System.out.print("Enter type (Expense/Income)\n");
             String input = scanner.nextLine().trim().toUpperCase();
             try {
-                return Transaction.TransactionType.valueOf(input);
+                return BaseTransaction.TransactionType.valueOf(input);
             } catch (IllegalArgumentException e) {
                 System.out.print("Invalid transacion type. Please enter either 'Expense' or 'Income'\n");
             }
         }
     }
+
+    public abstract class BaseTransaction implements ITransaction Comparable
 }
