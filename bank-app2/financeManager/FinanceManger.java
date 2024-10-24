@@ -1,3 +1,5 @@
+package financeManager;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -19,9 +21,8 @@ public class FinanceManger {
         return transactions;
     }
 
-    public double getBalance() {
-        calcBalance();
-        return balance;
+    public void getBalance() {
+        System.out.println(balance);
     }
 
     private void calcBalance() {
@@ -35,7 +36,8 @@ public class FinanceManger {
         }
     }
 
-    public void addTransaction(Scanner scanner) {
+    public void addTransaction() {
+        Scanner scanner = new Scanner(System.in);
         Transaction.TransactionType type = setType(scanner);
         if (type != null) {
             Transaction transaction = createTransaction(scanner, type);
@@ -75,7 +77,8 @@ public class FinanceManger {
         }
     }
 
-    public void removeTransaction(Scanner scanner) {
+    public void removeTransaction() {
+        Scanner scanner = new Scanner(System.in);
         System.out.print("enter index of transaction to remove: ");
         int index = Integer.parseInt(scanner.nextLine()) - 1;
         if (index >= 0 && index < transactions.size()) {
