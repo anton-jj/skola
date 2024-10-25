@@ -5,29 +5,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class UserInterface implements CommandService {
+public class UserInterface  {
    private final Scanner scanner;
    private final FinanceManger financeManager;
-   private final Map<Integer, Command> commands;
+   private final CommandHandler commandHandler;
 
    public UserInterface(FinanceManger financeManager) {
       this.financeManager = financeManager;
+      this.commandHandler = new CommandHandler(financeManager);
       this.scanner = new Scanner(System.in);
-      this.commands = new HashMap<>();
-      createCommands();
-   }
-
-   private void createCommands() {
-      initializeCommand(new ShowBalanceCommand(financeManager));
-      initializeCommand(new RemoveTransactionCommand(financeManager));
-      initializeCommand(new AddTransactionCommand(financeManager));
    }
 
    public void start() {
       menu();
       int input = getUserInput(scanner);
-      executeCommand(input);
-
+      commandHandler.executeCommand(input);
    }
 
    private int getUserInput(Scanner scanner) {
@@ -43,22 +35,10 @@ public class UserInterface implements CommandService {
 
    private void menu() {
       System.out.println("--------Personal finance--------");
-      for(Command command : commands.values()) {
+      for(Command command : commandHandler.getCommandMap().values()) {
          System.out.printf("%d. %s%n", command.getCommandId(), command.getDescription(), command.getName());
       }
       System.out.println("--------------------------------");
    }
 
-   @Override
-   public void initializeCommand(Command command) {
-      commands.put(command.getCommandId(), command);
    }
-
-   @Override
-   public void executeCommand(int id) {
-      Command command = commands.get(id);
-      if (commands != null) {
-         command.execute();
-      }
-   }
-}
