@@ -1,15 +1,15 @@
 package commands;
 
-import financeManager.FinanceManger;
+import financeManager.FinanceHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 public class CommandHandler implements CommandService {
-    private FinanceManger financeManger;
+    private FinanceHandler financeHandler;
     private final Map<Integer, Command> commandMap;
     
-    public CommandHandler(FinanceManger financeManger){
-        this.financeManger = financeManger;
+    public CommandHandler(FinanceHandler financeHandler){
+        this.financeHandler = financeHandler;
         this.commandMap = new HashMap<>();
         createCommands();
     }
@@ -17,10 +17,11 @@ public class CommandHandler implements CommandService {
         return commandMap;
     }
     private void createCommands() {
-        initializeCommand(new ShowBalanceCommand(financeManger));
-        initializeCommand(new RemoveTransactionCommand(financeManger));
-        initializeCommand(new AddTransactionCommand(financeManger));
-        initializeCommand(new ShowTransactionsCommand(financeManger));
+        initializeCommand(new ShowBalanceCommand(financeHandler));
+        initializeCommand(new RemoveTransactionCommand(financeHandler));
+        initializeCommand(new AddTransactionCommand(financeHandler));
+        initializeCommand(new ShowTransactionsCommand(financeHandler));
+        initializeCommand(new ExitCommand(financeHandler));
     }
     @Override
     public void initializeCommand(Command command) {

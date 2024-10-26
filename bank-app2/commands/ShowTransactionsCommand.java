@@ -1,16 +1,16 @@
 package commands;
-import financeManager.FinanceManger;
+import financeManager.FinanceHandler;
 
 public class ShowTransactionsCommand extends Command{
-  private final FinanceManger financeManger;
+  private final FinanceHandler financeHandler;
 
-  public ShowTransactionsCommand(FinanceManger financeManager){
+  public ShowTransactionsCommand(FinanceHandler financeManager){
       super("Show transactions", "Transactions");
-      this.financeManger = financeManager;
+      this.financeHandler = financeManager;
       }
 
     @Override
     public void execute(){
-      financeManger.listTransactions();
+      financeHandler.listTransactions();
       }
   }

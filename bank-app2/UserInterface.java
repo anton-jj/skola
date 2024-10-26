@@ -1,25 +1,25 @@
 import commands.*;
-import financeManager.FinanceManger;
+import financeManager.FinanceHandler;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class UserInterface  {
    private final Scanner scanner;
-   private final FinanceManger financeManager;
+   private final FinanceHandler financeManager;
    private final CommandHandler commandHandler;
 
-   public UserInterface(FinanceManger financeManager) {
+   public UserInterface(FinanceHandler financeManager) {
       this.financeManager = financeManager;
       this.commandHandler = new CommandHandler(financeManager);
       this.scanner = new Scanner(System.in);
    }
 
    public void start() {
+      while (true) {
       menu();
       int input = getUserInput(scanner);
       commandHandler.executeCommand(input);
+   }
    }
 
    private int getUserInput(Scanner scanner) {

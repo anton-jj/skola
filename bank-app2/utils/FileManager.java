@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class FileManager {
     private String filename;
 
-    public FileManager(String filename) {
-        this.filename = filename;
+    public FileManager() {
+        this.filename = "transactions.txt";
     }
 
     public void saveData(ArrayList<Transaction> transactions) throws IOException {

@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class FinanceManger {
+public class FinanceHandler {
     public ArrayList<Transaction> transactions;
     private double balance;
 
-    public FinanceManger() {
+    public FinanceHandler() {
         this.transactions = new ArrayList<>();
         this.balance = 0;
     }

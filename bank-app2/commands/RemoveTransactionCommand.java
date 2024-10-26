@@ -1,18 +1,18 @@
 package commands;
 
-import financeManager.FinanceManger;
+import financeManager.FinanceHandler;
 
 public class RemoveTransactionCommand extends Command{
-   private final FinanceManger financeManger;
+   private final FinanceHandler financeHandler;
 
-    public RemoveTransactionCommand(FinanceManger financeManger) {
+    public RemoveTransactionCommand(FinanceHandler financeHandler) {
         super("Remove a transaction", "Remove");
-        this.financeManger = financeManger;
+        this.financeHandler = financeHandler;
     }
 
 
     @Override
     public void execute() {
-        financeManger.removeTransaction();
+        financeHandler.removeTransaction();
     }
 }

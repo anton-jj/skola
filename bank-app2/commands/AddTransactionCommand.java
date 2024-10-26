@@ -1,18 +1,18 @@
 package commands;
 
-import financeManager.FinanceManger;
+import financeManager.FinanceHandler;
 
 public class AddTransactionCommand extends Command{
-    private final FinanceManger financeManger;
+    private final FinanceHandler financeHandler;
 
-    public AddTransactionCommand(FinanceManger financeManger){
+    public AddTransactionCommand(FinanceHandler financeHandler){
        super( "Add new transaction", "add" );
-       this.financeManger = financeManger;
+       this.financeHandler = financeHandler;
     }
 
     @Override
     public void execute() {
-       financeManger.addTransaction();
+       financeHandler.addTransaction();
     }
 
 }
