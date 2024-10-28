@@ -7,191 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
 public class FinanceHandler {
-    public ArrayList<Transaction> transactions;
-    private double balance;
+
+    private BalanceHandler balanceHandler;
+    private TransactionHandler transactionHandler;
+    private ReportGenerator reportGenerator;
 
     public FinanceHandler() {
-        this.transactions = new ArrayList<>();
-        this.balance = 0;
-    }
-
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
+        this.transactionHandler = new TransactionHandler();
+        this.balanceHandler = new BalanceHandler();
+        this.reportGenerator = new ReportGenerator(transactionHandler);
     }
 
     public void getBalance() {
-        System.out.println(balance);
+        System.out.println("getting balance...");
+        System.out.println(balanceManager.getBalance());
     }
 
-    private void calcBalance() {
-        balance = 0;
-        for (Transaction t : transactions) {
-            if (t.getType().equals(Transaction.TransactionType.INCOME)) {
-                balance += t.getAmount();
-            } else {
-                balance -= t.getAmount();
-            }
-        }
-    }
 
     public void addTransaction() {
-        Scanner scanner = new Scanner(System.in);
-        Transaction.TransactionType type = setType(scanner);
-        if (type != null) {
-            Transaction transaction = createTransaction(scanner, type);
-            if (transaction != null) {
-                transactions.add(transaction);
-                calcBalance();
-                System.out.print("Transaction added\n");
-            }
-        }
+        transactionManager.addTransaction();
+        System.out.println("transaction added");
     }
 
-    private Transaction createTransaction(Scanner scanner, Transaction.TransactionType type) {
-        while (true) {
-            System.out.println("Make tranaction (amount) (description) (date yyyy-MM-dd): ");
-            String input = scanner.nextLine().trim();
-
-            if (input.isEmpty()) {
-                System.out.print("Input can't be empty\n");
-                continue;
-            }
-            String[] args = input.split(" ", 3);
-            if (args.length < 3) {
-                System.out.print("Please fill the fields like the example\n");
-                continue;
-            }
-            try {
-                double amount = Double.parseDouble(args[0]);
-                String description = args[1];
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate date = LocalDate.parse(args[2], formatter);
-                return new Transaction(amount, description, date, type);
-            } catch (NumberFormatException e) {
-                System.out.print("Invalid amount. Please eneter  a valid number");
-            } catch (DateTimeParseException e) {
-                System.out.print("Invalid date format. Please use yyyy-MM-dd");
-            }
-        }
-    }
 
     public void removeTransaction() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("enter index of transaction to remove: ");
-        int index = Integer.parseInt(scanner.nextLine()) - 1;
-        if (index >= 0 && index < transactions.size()) {
-            transactions.remove(index);
-            calcBalance();
-            System.out.print("Transaction Removed\n");
-        } else {
-            System.out.print("Invalid index\n");
-        }
+        transactionHandler.removeTransaction();
     }
 
     public void listTransactions() {
-        if (transactions.isEmpty()) {
-            System.out.print("There is no transactions to show\n");
-        } else {
-            dateSort(transactions);
-            System.out.print("List of transaction\n");
-            for (int i = 0; i < transactions.size(); i++) {
-                Transaction t = transactions.get(i);
-                System.out.printf("%d: %s %s - %.2f (Date: %s)\n", i + 1, t.getType().name(), t.getDescription(),
-                        t.getAmount(), t.getDate());
-            }
-        }
+        transactionHandler.listTransactions();
     }
 
     public void report() {
-        if (transactions.isEmpty()) {
-            System.out.print("there is no transaction to show\n");
-            return;
-        }
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Select what you want to see: \n"
-                + "1. Transactions today \n" +
-                "2. Transactions last week \n" +
-                "3. Transactions last month \n" +
-                "4. Transactions last year \n");
-        int input = scanner.nextInt();
-        LocalDate today = LocalDate.now();
-        switch (input) {
-            case 1:
-                List<Transaction> todayTransactions = transactions.stream().filter(t -> t.getDate().isEqual(today))
-                        .collect(Collectors.toList());
-                printTransactions(todayTransactions, "Transactions today");
-                break;
-            case 2:
-                LocalDate oneWeek = today.minusWeeks(1);
-                List<Transaction> lastWeekTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1))
-                                && t.getDate().isBefore(today.plusDays(1)))
-                        .collect(Collectors.toList());
-                printTransactions(lastWeekTransactions, "Transactions last week");
-                break;
-            case 3:
-                LocalDate oneMonth = today.minusMonths(1);
-                List<Transaction> lastMonthTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1))
-                                && t.getDate().isBefore(today.plusDays(1)))
-                        .collect(Collectors.toList());
-                printTransactions(lastMonthTransactions, "Transactions last month");
-                break;
-            case 4:
-                LocalDate oneYear = today.minusYears(1);
-                List<Transaction> lastYearTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneYear.minusDays(1))
-                                && t.getDate().isBefore(today.plusDays(1)))
-                        .collect(Collectors.toList());
-                printTransactions(lastYearTransactions, "Transactions last year");
-                break;
-        }
-
+        reportGenerator.report();
     }
 
-    private void dateSort(ArrayList<Transaction> tranactions) {
-        int n = tranactions.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - 1; j++) {
-                if (transactions.get(j).compareTo(tranactions.get(j + 1)) > 0) {
-                    Transaction temp = tranactions.get(j);
-                    transactions.set(j, tranactions.get(j + 1));
-                    transactions.set(j + 1, temp);
-                }
-            }
-        }
-    }
-
-    private void printTransactions(List<Transaction> transactions, String header) {
-        if (transactions.isEmpty()) {
-            System.out.print("There is no transactions for this period to show\n");
-            return;
-        }
-        double income = 0;
-        double expense = 0;
-        System.out.print(header + "\n");
-        for (Transaction t : transactions) {
-            System.out.printf("%s - %.2f (Date: %s)%n", t.getDescription(), t.getAmount(), t.getDate());
-            if (t.getType() == Transaction.TransactionType.INCOME) {
-                income += t.getAmount();
-            } else {
-                expense += t.getAmount();
-            }
-        }
-        System.out.printf("Income during period: %.2f\nExpenses during period: %.2f\n", income, expense);
-    }
-
-    public Transaction.TransactionType setType(Scanner scanner) {
-        while (true) {
-            System.out.print("Enter type (Expense/Income)\n");
-            String input = scanner.nextLine().trim().toUpperCase();
-            try {
-                return Transaction.TransactionType.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.print("Invalid transacion type. Please enter either 'Expense' or 'Income'\n");
-            }
-        }
-    }
 }
