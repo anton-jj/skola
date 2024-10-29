@@ -9,14 +9,13 @@ public class FinanceHandler {
     private ReportGenerator reportGenerator;
 
     public FinanceHandler() {
-        this.transactionHandler = new TransactionHandler();
         this.balanceHandler = new BalanceHandler();
+        this.transactionHandler = new TransactionHandler(balanceHandler);
         this.reportGenerator = new ReportGenerator(transactionHandler);
     }
 
     public void getBalance() {
-        System.out.println("getting balance...");
-        System.out.println(balanceHandler.getBalance());
+        balanceHandler.printBalance();
     }
 
 

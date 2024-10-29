@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 public class TransactionHandler {
     private ArrayList<Transaction> transactions;
-    private BalanceHandler balanceManager;
+    private BalanceHandler balanceHandler;
 
-    public TransactionHandler(){
+    public TransactionHandler(BalanceHandler balanceHandler){
         this.transactions = new ArrayList<>();
-        this.balanceManager = new BalanceHandler();
+        this.balanceHandler = balanceHandler;
     }
 
     public ArrayList<Transaction> getTransactions(){
@@ -30,7 +30,7 @@ public class TransactionHandler {
             Transaction transaction = createTransaction(scanner, type);
             if (transaction != null) {
                 transactions.add(transaction);
-                balanceManager.updateBalance(transaction);
+                balanceHandler.updateBalance(transaction);
                 System.out.print("Transaction added\n");
             }
         }
@@ -42,7 +42,7 @@ public class TransactionHandler {
         int index = Integer.parseInt(scanner.nextLine()) - 1;
         if (index >= 0 && index < transactions.size()) {
             transactions.remove(index);
-            balanceManager.updateBalance(transactions.get(index));
+            balanceHandler.updateBalance(transactions.get(index));
             System.out.print("Transaction Removed\n");
         } else {
             System.out.print("Invalid index\n");

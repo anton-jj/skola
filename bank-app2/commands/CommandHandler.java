@@ -22,6 +22,7 @@ public class CommandHandler implements CommandService {
         initializeCommand(new AddTransactionCommand(financeHandler));
         initializeCommand(new ShowTransactionsCommand(financeHandler));
         initializeCommand(new ExitCommand(financeHandler));
+        initializeCommand(new ReportCommand(financeHandler));
     }
     @Override
     public void initializeCommand(Command command) {

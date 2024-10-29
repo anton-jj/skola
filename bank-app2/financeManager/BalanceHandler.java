@@ -4,8 +4,9 @@ public class BalanceHandler {
     private double balance;
 
     public BalanceHandler(){
-        this.balance = 0;
+        balance = 0;
     }
+
     public double getBalance(){
         return balance;
     }
@@ -16,5 +17,9 @@ public class BalanceHandler {
        }else {
            balance -= transaction.getAmount();
        }
+    }
+
+    public void printBalance() {
+        System.out.println(balance);
     }
 }
