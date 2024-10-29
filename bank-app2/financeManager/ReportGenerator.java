@@ -12,48 +12,49 @@ public class ReportGenerator {
         this.transactionHandler = transactionHandler;
     }
     public void report() {
-        if (transactions.isEmpty()) {
+        if (!transactionHandler.getTransactions().isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Select what you want to see: \n"
+                    + "1. Transactions today \n" +
+                    "2. Transactions last week \n" +
+                    "3. Transactions last month \n" +
+                    "4. Transactions last year \n");
+            int input = scanner.nextInt();
+            LocalDate today = LocalDate.now();
+            switch (input) {
+                case 1:
+                    List<Transaction> todayTransactions = transactionHandler.getTransactions().stream().filter(t -> t.getDate().isEqual(today))
+                            .collect(Collectors.toList());
+                    printTransactions(todayTransactions, "Transactions today");
+                    break;
+                case 2:
+                    LocalDate oneWeek = today.minusWeeks(1);
+                    List<Transaction> lastWeekTransactions = transactionHandler.getTransactions().stream()
+                            .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1))
+                                    && t.getDate().isBefore(today.plusDays(1)))
+                            .collect(Collectors.toList());
+                    printTransactions(lastWeekTransactions, "Transactions last week");
+                    break;
+                case 3:
+                    LocalDate oneMonth = today.minusMonths(1);
+                    List<Transaction> lastMonthTransactions = transactionHandler.getTransactions().stream()
+                            .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1))
+                                    && t.getDate().isBefore(today.plusDays(1)))
+                            .collect(Collectors.toList());
+                    printTransactions(lastMonthTransactions, "Transactions last month");
+                    break;
+                case 4:
+                    LocalDate oneYear = today.minusYears(1);
+                    List<Transaction> lastYearTransactions = transactionHandler.getTransactions().stream()
+                            .filter(t -> t.getDate().isAfter(oneYear.minusDays(1))
+                                    && t.getDate().isBefore(today.plusDays(1)))
+                            .collect(Collectors.toList());
+                    printTransactions(lastYearTransactions, "Transactions last year");
+                    break;
+            }
+        } else {
             System.out.print("there is no transaction to show\n");
             return;
-        }
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Select what you want to see: \n"
-                + "1. Transactions today \n" +
-                "2. Transactions last week \n" +
-                "3. Transactions last month \n" +
-                "4. Transactions last year \n");
-        int input = scanner.nextInt();
-        LocalDate today = LocalDate.now();
-        switch (input) {
-            case 1:
-                List<Transaction> todayTransactions = transactions.stream().filter(t -> t.getDate().isEqual(today))
-                        .collect(Collectors.toList());
-                printTransactions(todayTransactions, "Transactions today");
-                break;
-            case 2:
-                LocalDate oneWeek = today.minusWeeks(1);
-                List<Transaction> lastWeekTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1))
-                                && t.getDate().isBefore(today.plusDays(1)))
-                        .collect(Collectors.toList());
-                printTransactions(lastWeekTransactions, "Transactions last week");
-                break;
-            case 3:
-                LocalDate oneMonth = today.minusMonths(1);
-                List<Transaction> lastMonthTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1))
-                                && t.getDate().isBefore(today.plusDays(1)))
-                        .collect(Collectors.toList());
-                printTransactions(lastMonthTransactions, "Transactions last month");
-                break;
-            case 4:
-                LocalDate oneYear = today.minusYears(1);
-                List<Transaction> lastYearTransactions = transactions.stream()
-                        .filter(t -> t.getDate().isAfter(oneYear.minusDays(1))
-                                && t.getDate().isBefore(today.plusDays(1)))
-                        .collect(Collectors.toList());
-                printTransactions(lastYearTransactions, "Transactions last year");
-                break;
         }
 
     }

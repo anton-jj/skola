@@ -7,8 +7,9 @@ public class Main {
     public static void main(String[] args) {
         FinanceHandler financeHandler = new FinanceHandler();
         FileManager fileManager = new FileManager();
+
         try {
-            financeHandler.transactions = fileManager.loadData();
+            financeHandler.setTransactiontransactions(fileManager.loadData());
             System.out.println("File loaded");
         } catch (Exception e) {
             System.out.print("No data to load\n");

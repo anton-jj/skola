@@ -12,22 +12,29 @@ public class TransactionHandler {
 
     public TransactionHandler(){
         this.transactions = new ArrayList<>();
-        this.balanceManager = new BalanceHandler;
+        this.balanceManager = new BalanceHandler();
+    }
+
+    public ArrayList<Transaction> getTransactions(){
+        return transactions;
+    }
+
+    public void setTransactions(ArrayList<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public void addTransaction() {
         Scanner scanner = new Scanner(System.in);
-        Transaction.TransactionType type = setType(scanner);
+        Transaction.TransactionType type = setType();
         if (type != null) {
             Transaction transaction = createTransaction(scanner, type);
             if (transaction != null) {
                 transactions.add(transaction);
-                calcBalance();
+                balanceManager.updateBalance(transaction);
                 System.out.print("Transaction added\n");
             }
         }
     }
-
 
     public void removeTransaction() {
         Scanner scanner = new Scanner(System.in);
@@ -35,7 +42,7 @@ public class TransactionHandler {
         int index = Integer.parseInt(scanner.nextLine()) - 1;
         if (index >= 0 && index < transactions.size()) {
             transactions.remove(index);
-            calcBalance();
+            balanceManager.updateBalance(transactions.get(index));
             System.out.print("Transaction Removed\n");
         } else {
             System.out.print("Invalid index\n");
@@ -46,7 +53,6 @@ public class TransactionHandler {
         if (transactions.isEmpty()) {
             System.out.print("There is no transactions to show\n");
         } else {
-            dateSort(transactions);
             System.out.print("List of transaction\n");
             for (int i = 0; i < transactions.size(); i++) {
                 Transaction t = transactions.get(i);
@@ -83,17 +89,20 @@ public class TransactionHandler {
             }
         }
 
-        public Transaction.TransactionType setType(Scanner scanner) {
-            while (true) {
-                System.out.print("Enter type (Expense/Income)\n");
-                String input = scanner.nextLine().trim().toUpperCase();
-                try {
-                    return Transaction.TransactionType.valueOf(input);
-                } catch (IllegalArgumentException e) {
-                    System.out.print("Invalid transacion type. Please enter either 'Expense' or 'Income'\n");
-                }
+    }
+
+    private Transaction.TransactionType setType() {
+        Scanner typeScanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter type (Expense/Income)\n");
+            String input = typeScanner.nextLine().trim().toUpperCase();
+            try {
+                return Transaction.TransactionType.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.print("Invalid transacion type. Please enter either 'Expense' or 'Income'\n");
             }
         }
-    }}
+    }
+}
 
 

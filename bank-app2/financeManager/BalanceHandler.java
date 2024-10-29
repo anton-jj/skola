@@ -9,7 +9,8 @@ public class BalanceHandler {
     public double getBalance(){
         return balance;
     }
-    private void updateBalance(Transaction transaction){
+
+    public void updateBalance(Transaction transaction){
        if(transaction.getType() == Transaction.TransactionType.INCOME) {
            balance += transaction.getAmount();
        }else {

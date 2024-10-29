@@ -1,12 +1,7 @@
 package financeManager;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+
 public class FinanceHandler {
 
     private BalanceHandler balanceHandler;
@@ -21,12 +16,12 @@ public class FinanceHandler {
 
     public void getBalance() {
         System.out.println("getting balance...");
-        System.out.println(balanceManager.getBalance());
+        System.out.println(balanceHandler.getBalance());
     }
 
 
     public void addTransaction() {
-        transactionManager.addTransaction();
+        transactionHandler.addTransaction();
         System.out.println("transaction added");
     }
 
@@ -43,4 +38,11 @@ public class FinanceHandler {
         reportGenerator.report();
     }
 
+    public ArrayList<Transaction> getTransactions(){
+        return transactionHandler.getTransactions();
+    }
+
+    public void setTransactiontransactions(ArrayList<Transaction> transactions) {
+         transactionHandler.setTransactions(transactions);
+    }
 }
