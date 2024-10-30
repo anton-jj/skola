@@ -5,17 +5,17 @@ import utils.*;
 import java.io.IOException;
 
 public class ExitCommand extends Command{
-    FileManager fileManager;
+    TransactionStorage transactionStorage;
     FinanceHandler financeHandler;
     public ExitCommand(FinanceHandler financeHandler){
         super("Exit program", "Exit");
         this.financeHandler = financeHandler;
-        this.fileManager = new FileManager();
+        this.transactionStorage = new TransactionStorage();
     }
     @Override
     public void execute() {
         try {
-            fileManager.save(financeHandler.getTransactions());
+            transactionStorage.save(financeHandler.getTransactionHandler().getTransactions());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

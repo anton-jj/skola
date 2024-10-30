@@ -3,16 +3,15 @@ package utils;
 import financeManager.Transaction;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
-public class FileManager implements DataStrorage<ArrayList<Transaction>> {
+public class TransactionStorage implements DataStrorage<ArrayList<Transaction>> {
+
     private final String filename;
 
-    public FileManager() {
+    public TransactionStorage() {
         this.filename = "transactions.csv";
     }
-
 
     @Override
     public void save(ArrayList<Transaction> transactions) throws IOException {
@@ -41,16 +40,11 @@ public class FileManager implements DataStrorage<ArrayList<Transaction>> {
                 String line;
                while((line = reader.readLine()) != null){
                   String[] parts = line.split(",");
-                   System.out.println("part 1: " + parts[0]);
-                   System.out.println("part 2: " + parts[1]);
-                   System.out.println("part 2: " + parts[2]);
-                   System.out.println("part 3: " + parts[3]);
                   if (parts.length == 4){
                       LocalDate date = LocalDate.parse(parts[0]);
                       double amount = Double.parseDouble(parts[1]);
                       Transaction.TransactionType type = Transaction.TransactionType.valueOf(parts[2].toUpperCase());
                       String description = parts[3];
-                      System.out.println("this is after if statmernt part 3" + parts[3]);
                       transactions.add(new Transaction(amount, description, date, type));
                   }else {
                       System.out.println(line);

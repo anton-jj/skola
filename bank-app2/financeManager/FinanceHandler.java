@@ -9,13 +9,20 @@ public class FinanceHandler {
     private ReportGenerator reportGenerator;
 
     public FinanceHandler() {
-        this.balanceHandler = new BalanceHandler(transactionHandler);
-        this.transactionHandler = new TransactionHandler(balanceHandler);
-        this.reportGenerator = new ReportGenerator(transactionHandler);
+        this.transactionHandler = new TransactionHandler(this);
+        this.balanceHandler = new BalanceHandler(this);
+        this.reportGenerator = new ReportGenerator(this);
+
+    }
+    public TransactionHandler getTransactionHandler(){
+        return this.transactionHandler;
     }
 
+    public BalanceHandler getBalanceHandler(){
+        return this.balanceHandler;
+    }
     public void getBalance() {
-        balanceHandler.printBalance();
+        System.out.println(balanceHandler.getBalance());
     }
 
 
@@ -37,9 +44,9 @@ public class FinanceHandler {
         reportGenerator.report();
     }
 
-    public ArrayList<Transaction> getTransactions(){
-        return transactionHandler.getTransactions();
-    }
+//    public ArrayList<Transaction> getTransactions(){
+//        return transactionHandler.getTransactions();
+//    }
 
     public void setTransactiontransactions(ArrayList<Transaction> transactions) {
          transactionHandler.setTransactions(transactions);

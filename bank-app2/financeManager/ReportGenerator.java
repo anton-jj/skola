@@ -6,13 +6,14 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class ReportGenerator {
-     TransactionHandler transactionHandler;
+    FinanceHandler financeHandler;
 
-    public ReportGenerator(TransactionHandler transactionHandler){
-        this.transactionHandler = transactionHandler;
+    public ReportGenerator(FinanceHandler financeHandler){
+        this.financeHandler = financeHandler;
     }
+
     public void report() {
-        if (!transactionHandler.getTransactions().isEmpty()) {
+        if (!financeHandler.getTransactionHandler().getTransactions().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Select what you want to see: \n"
                     + "1. Transactions today \n" +
@@ -23,13 +24,13 @@ public class ReportGenerator {
             LocalDate today = LocalDate.now();
             switch (input) {
                 case 1:
-                    List<Transaction> todayTransactions = transactionHandler.getTransactions().stream().filter(t -> t.getDate().isEqual(today))
+                    List<Transaction> todayTransactions = financeHandler.getTransactionHandler().getTransactions().stream().filter(t -> t.getDate().isEqual(today))
                             .collect(Collectors.toList());
                     printTransactions(todayTransactions, "Transactions today");
                     break;
                 case 2:
                     LocalDate oneWeek = today.minusWeeks(1);
-                    List<Transaction> lastWeekTransactions = transactionHandler.getTransactions().stream()
+                    List<Transaction> lastWeekTransactions = financeHandler.getTransactionHandler().getTransactions().stream()
                             .filter(t -> t.getDate().isAfter(oneWeek.minusDays(1))
                                     && t.getDate().isBefore(today.plusDays(1)))
                             .collect(Collectors.toList());
@@ -37,7 +38,7 @@ public class ReportGenerator {
                     break;
                 case 3:
                     LocalDate oneMonth = today.minusMonths(1);
-                    List<Transaction> lastMonthTransactions = transactionHandler.getTransactions().stream()
+                    List<Transaction> lastMonthTransactions = financeHandler.getTransactionHandler().getTransactions().stream()
                             .filter(t -> t.getDate().isAfter(oneMonth.minusDays(1))
                                     && t.getDate().isBefore(today.plusDays(1)))
                             .collect(Collectors.toList());
@@ -45,7 +46,7 @@ public class ReportGenerator {
                     break;
                 case 4:
                     LocalDate oneYear = today.minusYears(1);
-                    List<Transaction> lastYearTransactions = transactionHandler.getTransactions().stream()
+                    List<Transaction> lastYearTransactions = financeHandler.getTransactionHandler().getTransactions().stream()
                             .filter(t -> t.getDate().isAfter(oneYear.minusDays(1))
                                     && t.getDate().isBefore(today.plusDays(1)))
                             .collect(Collectors.toList());
