@@ -2,13 +2,15 @@ package financeManager;
 
 public class BalanceHandler {
     private double balance;
+    private TransactionHandler transactionHandler;
 
-    public BalanceHandler(){
-        balance = 0;
+    public BalanceHandler(TransactionHandler transactionHandler){
+        this.transactionHandler = transactionHandler;
+        this.balance = 0;
     }
 
     public double getBalance(){
-        return balance;
+        return this.balance;
     }
 
     public void updateBalance(Transaction transaction){

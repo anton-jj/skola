@@ -15,7 +15,7 @@ public class ExitCommand extends Command{
     @Override
     public void execute() {
         try {
-            fileManager.saveData(financeHandler.getTransactions());
+            fileManager.save(financeHandler.getTransactions());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

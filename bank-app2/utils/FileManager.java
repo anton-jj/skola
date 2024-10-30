@@ -3,27 +3,55 @@ package utils;
 import financeManager.Transaction;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
-public class FileManager {
-    private String filename;
+public class FileManager implements DataStrorage<ArrayList<Transaction>> {
+    private final String filename;
 
     public FileManager() {
-        this.filename = "transactions.txt";
+        this.filename = "transactions.csv";
     }
 
-    public void saveData(ArrayList<Transaction> transactions) throws IOException {
-        try (ObjectOutputStream oss = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oss.writeObject(transactions);
+
+    @Override
+    public void save(ArrayList<Transaction> transactions) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Transaction t : transactions) {
+                writer.write(String.format("%s,%f,%s,%s%n",
+                        t.getDate().toString(),
+                        t.getAmount(),
+                        t.getType().name(),
+                        t.getDescription()
+                ));
+            }
         }
     }
 
-    public ArrayList<Transaction> loadData() throws IOException, ClassNotFoundException {
-        File file = new File(filename);
-        if (file.length() == 0) {
-            return new ArrayList<>();
-        }
-        try (ObjectInputStream ois = new ObjectInputStream((new FileInputStream(filename)))) {
-            return (ArrayList<Transaction>) ois.readObject();
-        }
+    @Override
+    public ArrayList<Transaction> load() throws IOException {
+            ArrayList<Transaction> transactions = new ArrayList<>();
+            File file = new File(filename);
+
+            if(!file.exists() || file.length() == 0){
+               return transactions;
+            }
+
+            try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
+                String line;
+               while((line = reader.readLine()) != null){
+                  String[] parts = line.split(",");
+                  if (parts.length == 4){
+                      LocalDate date = LocalDate.parse(parts[0]);
+                      double amount = Double.parseDouble(parts[1]);
+                      Transaction.TransactionType type = Transaction.TransactionType.valueOf(parts[2].toUpperCase());
+                      String description = parts[2];
+
+                      transactions.add(new Transaction(amount, description, date, type));
+                  }
+               }
+
+               return transactions;
+            }
     }
 }

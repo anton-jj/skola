@@ -9,7 +9,7 @@ public class FinanceHandler {
     private ReportGenerator reportGenerator;
 
     public FinanceHandler() {
-        this.balanceHandler = new BalanceHandler();
+        this.balanceHandler = new BalanceHandler(transactionHandler);
         this.transactionHandler = new TransactionHandler(balanceHandler);
         this.reportGenerator = new ReportGenerator(transactionHandler);
     }

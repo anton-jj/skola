@@ -9,7 +9,7 @@ public class Main {
         FileManager fileManager = new FileManager();
 
         try {
-            financeHandler.setTransactiontransactions(fileManager.loadData());
+            financeHandler.setTransactiontransactions(fileManager.load());
             System.out.println("File loaded");
         } catch (Exception e) {
             System.out.print("No data to load\n");
