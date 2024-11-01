@@ -1,1 +1,15 @@
 test
+/.classpath
+/.giignore
+/.gitignore
+/.idea/
+/.project
+/Main.class
+/UserInterface.class
+/bank-app2.iml
+/commands/
+/financeManager/
+/out/
+/transactions.csv
+/transactions.txt
+/utils/

@@ -1,7 +1,6 @@
 package commands;
 
 import financeManager.FinanceHandler;
-import financeManager.ReportGenerator;
 
 public class ReportCommand extends  Command{
 private final FinanceHandler financeHandler;

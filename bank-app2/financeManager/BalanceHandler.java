@@ -2,7 +2,6 @@ package financeManager;
 
 public class BalanceHandler {
     private double balance;
-    private TransactionHandler transactionHandler;
     private FinanceHandler finanaceHandler;
 
     BalanceHandler(FinanceHandler financeHandler){

@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class TransactionHandler {
     private ArrayList<Transaction> transactions;
-    private BalanceHandler balanceHandler;
     private FinanceHandler financeHandler;
 
     public TransactionHandler(FinanceHandler financeHandler){
@@ -53,14 +52,24 @@ public class TransactionHandler {
     }
 
     public void listTransactions() {
+        int showLess = 20;
+        int j = 0;
         if (transactions.isEmpty()) {
             System.out.print("There is no transactions to show\n");
         } else {
+            Scanner scanner = new Scanner(System.in);
             System.out.print("List of transaction\n");
             for (int i = 0; i < transactions.size(); i++) {
                 Transaction t = transactions.get(i);
                 System.out.printf("%d: %s %s - %.2f (Date: %s)\n", i + 1, t.getType().name(), t.getDescription(),
                         t.getAmount(), t.getDate());
+                j++;
+                if (j == showLess) {
+                    System.out.println("---- show more?(y/n) ----");
+                    char input = scanner.next().toUpperCase().charAt(0);
+                    if (input == 'Y')  continue;
+                    else  break;
+                }
             }
         }
     }
