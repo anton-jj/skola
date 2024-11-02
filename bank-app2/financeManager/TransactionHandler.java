@@ -6,12 +6,17 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+import utils.InputHandler;
+
 public class TransactionHandler {
     private ArrayList<Transaction> transactions;
     private FinanceHandler financeHandler;
+    private InputHandler inputHandler;
 
     public TransactionHandler(FinanceHandler financeHandler){
         this.financeHandler = financeHandler;
+        this.inputHandler = new InputHandler();
         this.transactions = new ArrayList<>();
 
     }
@@ -26,10 +31,9 @@ public class TransactionHandler {
     }
 
     public void addTransaction() {
-        Scanner scanner = new Scanner(System.in);
-        Transaction.TransactionType type = setType();
+		Transaction.TransactionType type = inputHandler.getTransactionType();
         if (type != null) {
-            Transaction transaction = createTransaction(scanner, type);
+            Transaction transaction = createTransaction(type);
             if (transaction != null) {
                 transactions.add(transaction);
                 financeHandler.getBalanceHandler().updateBalance(transaction);
@@ -57,7 +61,6 @@ public class TransactionHandler {
         if (transactions.isEmpty()) {
             System.out.print("There is no transactions to show\n");
         } else {
-            Scanner scanner = new Scanner(System.in);
             System.out.print("List of transaction\n");
             for (int i = 0; i < transactions.size(); i++) {
                 Transaction t = transactions.get(i);
@@ -65,56 +68,37 @@ public class TransactionHandler {
                         t.getAmount(), t.getDate());
                 j++;
                 if (j == showLess) {
-                    System.out.println("---- show more?(y/n) ----");
-                    char input = scanner.next().toUpperCase().charAt(0);
-                    if (input == 'Y')  continue;
-                    else  break;
+                    System.out.println("----show more?(y/n) ----");
+                    char input = inputHandler.showMore();
+                    if (input == 'Y') {
+						continue;
+					} else {
+						break;
+					}
                 }
             }
         }
     }
 
-    private Transaction createTransaction(Scanner scanner, Transaction.TransactionType type) {
+    private Transaction createTransaction(Transaction.TransactionType type) {
         while (true) {
-            System.out.println("Make tranaction (amount) (description) (date yyyy-MM-dd): ");
-            String input = scanner.nextLine().trim();
+        	String[] input = inputHandler.getTransactionDetails();
 
-            if (input.isEmpty()) {
-                System.out.print("Input can't be empty\n");
-                continue;
-            }
-            String[] args = input.split(" ", 3);
-            if (args.length < 3) {
-                System.out.print("Please fill the fields like the example\n");
-                continue;
-            }
             try {
-                double amount = Double.parseDouble(args[0]);
-                String description = args[1];
+                double amount = Double.parseDouble(input[0]);
+                String description = input[1];
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate date = LocalDate.parse(args[2], formatter);
+                LocalDate date = LocalDate.parse(input[2], formatter);
                 return new Transaction(amount, description, date, type);
             } catch (NumberFormatException e) {
-                System.out.print("Invalid amount. Please eneter  a valid number");
+                System.out.println("Invalid amount. Please eneter  a valid number");
             } catch (DateTimeParseException e) {
-                System.out.print("Invalid date format. Please use yyyy-MM-dd");
+                System.out.println("Invalid date format. Please use yyyy-MM-dd");
             }
         }
 
     }
 
-    private Transaction.TransactionType setType() {
-        Scanner typeScanner = new Scanner(System.in);
-        while (true) {
-            System.out.print("Enter type (Expense/Income)\n");
-            String input = typeScanner.nextLine().trim().toUpperCase();
-            try {
-                return Transaction.TransactionType.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.print("Invalid transacion type. Please enter either 'Expense' or 'Income'\n");
-            }
-        }
-    }
 }
 
 

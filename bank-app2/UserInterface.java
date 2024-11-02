@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 public class UserInterface  {
    private final Scanner scanner;
-   private final FinanceHandler financeManager;
    private final CommandHandler commandHandler;
 
    public UserInterface(FinanceHandler financeManager) {
-      this.financeManager = financeManager;
       this.commandHandler = new CommandHandler(financeManager);
       this.scanner = new Scanner(System.in);
    }
