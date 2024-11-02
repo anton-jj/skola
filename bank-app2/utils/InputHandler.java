@@ -46,7 +46,7 @@ public class InputHandler {
 	}
 	
 	public char showMore() {
-		char input = scanner.next().charAt(0);
+		char input = scanner.next().toUpperCase().charAt(0);
 		return input;
 	}
 }

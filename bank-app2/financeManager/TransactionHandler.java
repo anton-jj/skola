@@ -43,7 +43,7 @@ public class TransactionHandler {
     }
 
     public void removeTransaction() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.
         System.out.print("enter index of transaction to remove: ");
         int index = Integer.parseInt(scanner.nextLine()) - 1;
         if (index >= 0 && index < transactions.size()) {
