@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import utils.InputHandler;
+
 public class ReportGenerator {
-    FinanceHandler financeHandler;
+	private FinanceHandler financeHandler;
+    private InputHandler inputH;
 
     public ReportGenerator(FinanceHandler financeHandler){
         this.financeHandler = financeHandler;
@@ -14,13 +17,12 @@ public class ReportGenerator {
 
     public void report() {
         if (!financeHandler.getTransactionHandler().getTransactions().isEmpty()) {
-            Scanner scanner = new Scanner(System.in);
             System.out.print("Select what you want to see: \n"
                     + "1. Transactions today \n" +
                     "2. Transactions last week \n" +
                     "3. Transactions last month \n" +
                     "4. Transactions last year \n");
-            int input = scanner.nextInt();
+            int input = inputH.readIndex();
             LocalDate today = LocalDate.now();
             switch (input) {
                 case 1:

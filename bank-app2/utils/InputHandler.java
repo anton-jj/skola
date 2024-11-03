@@ -49,4 +49,7 @@ public class InputHandler {
 		char input = scanner.next().toUpperCase().charAt(0);
 		return input;
 	}
+	public int readIndex() {
+		return scanner.nextInt();
+	}
 }

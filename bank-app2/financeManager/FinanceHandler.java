@@ -28,7 +28,6 @@ public class FinanceHandler {
 
     public void addTransaction() {
         transactionHandler.addTransaction();
-        System.out.println("transaction added");
     }
 
 
@@ -44,9 +43,6 @@ public class FinanceHandler {
         reportGenerator.report();
     }
 
-//    public ArrayList<Transaction> getTransactions(){
-//        return transactionHandler.getTransactions();
-//    }
 
     public void setTransactiontransactions(ArrayList<Transaction> transactions) {
          transactionHandler.setTransactions(transactions);
