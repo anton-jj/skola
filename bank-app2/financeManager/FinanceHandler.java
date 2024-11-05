@@ -22,7 +22,7 @@ public class FinanceHandler {
         return this.balanceHandler;
     }
     public void getBalance() {
-        System.out.println(balanceHandler.getBalance());
+        System.out.println("Balance: " + balanceHandler.getBalance());
     }
 
 

@@ -1,6 +1,16 @@
 test
 /.metadata/
+/.classpath
+/.giignore
+/.gitignore
+/.idea/
+/.project
+/Main.class
+/bank-app2.iml
+/commands/
 /financeManager/
+/out/
+/transactions.csv
+/transactions.txt
 /userInterface/
 /utils/
-/out/

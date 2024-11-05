@@ -4,20 +4,21 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-
+import userInterface.ConsoleOutput;
 import utils.InputHandler;
 
 public class TransactionHandler {
 	private ArrayList<Transaction> transactions;
 	private FinanceHandler financeHandler;
 	private InputHandler inputH;
+	private ConsoleOutput output;
 
 	public TransactionHandler(FinanceHandler financeHandler){
 		this.financeHandler = financeHandler;
 		this.inputH = new InputHandler();
 		this.transactions = new ArrayList<>();
+		this.output = new ConsoleOutput();
 	}
 
 	public ArrayList<Transaction> getTransactions(){
@@ -29,26 +30,28 @@ public class TransactionHandler {
 	}
 
 	public void addTransaction() {
-		Transaction.TransactionType type = inputH.getTransactionType();
+		output.displayPrompt("Enter Type (INCOME/EXPENSE) \n");
+		Transaction.TransactionType type = inputH.readTransactionType();
 		if (type != null) {
 			Transaction transaction = createTransaction(type);
 			if (transaction != null) {
 				transactions.add(transaction);
 				financeHandler.getBalanceHandler().updateBalance(transaction);
-				System.out.print("Transaction added\n");
+				output.displayMessage("Transaction added\n");
 			}
 		}
+		output.displayError("Invalid transaction ype, Please Enter either 'Expense or Income' ");
 	}
 
 	public void removeTransaction() {
-		System.out.print("enter index of transaction to remove: ");
+		output.displayPrompt("enter index of transaction to remove: ");
 		int index = inputH.readIndex() - 1;
 		if (index >= 0 && index < transactions.size()) {
 			transactions.remove(index);
 			financeHandler.getBalanceHandler().updateBalance(transactions.get(index));
-			System.out.print("Transaction Removed\n");
+			output.displayMessage("Transaction Removed\n");
 		} else {
-			System.out.print("Invalid index\n");
+			output.displayError("Invalid index\n");
 		}
 	}
 
@@ -56,16 +59,15 @@ public class TransactionHandler {
 		int showLess = 20;
 		int j = 0;
 		if (transactions.isEmpty()) {
-			System.out.print("There is no transactions to show\n");
+			output.displayError("There is no transactions to show\n");
 		} else {
 			System.out.print("List of transaction\n");
 			for (int i = 0; i < transactions.size(); i++) {
 				Transaction t = transactions.get(i);
-				System.out.printf("%d: %s %s - %.2f (Date: %s)\n", i + 1, t.getType().name(), t.getDescription(),
-						t.getAmount(), t.getDate());
+				output.displayTransaction(t);
 				j++;
 				if (j == showLess) {
-					System.out.println("----show more?(y/n) ----");
+					output.displayPrompt("----show more?(y/n) ----");
 					char input = inputH.showMore();
 					if (input == 'Y') {
 						continue;
@@ -79,7 +81,7 @@ public class TransactionHandler {
 
 	private Transaction createTransaction(Transaction.TransactionType type) {
 		while (true) {
-			String[] input = inputH.getTransactionDetails();
+			String[] input = inputH.readTransactionDetails();
 			try {
 				double amount = Double.parseDouble(input[0]);
 				String description = input[1];
@@ -87,13 +89,11 @@ public class TransactionHandler {
 				LocalDate date = LocalDate.parse(input[2], formatter);
 				return new Transaction(amount, description, date, type);
 			} catch (NumberFormatException e) {
-				System.out.println("Invalid amount. Please eneter  a valid number");
+				output.displayError("Invalid amount. Please eneter  a valid number");
 			} catch (DateTimeParseException e) {
-				System.out.println("Invalid date format. Please use yyyy-MM-dd");
+				output.displayError("Invalid date format. Please use yyyy-MM-dd");
 			}
 		}
 
 	}
 }
-
-
