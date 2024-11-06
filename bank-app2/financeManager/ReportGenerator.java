@@ -17,50 +17,63 @@ public class ReportGenerator {
 		this.output = new ConsoleOutput();
 	}
 
-	/*TODO try to split this metod*/
-	public void report() {
-		if (!financeHandler.getTransactionHandler().getTransactions().isEmpty()) {
-			output.displayMenu("Select what you want to see: \n"
-					+ "1. Transactions today \n" +
-					"2. Transactions last week \n" +
-					"3. Transactions last month \n" +
-					"4. Transactions last year \n");
-			int input = inputH.handleMenuPrompt();
-			LocalDate today = LocalDate.now();
-			switch (input) {
-			case 1:
-				List<Transaction> todayTransactions = financeHandler.getTransactionHandler().getTransactions().stream().filter(t -> t.getDate().isEqual(today))
+	private int displayMenuAndGetChoice() {
+		output.displayMenu("Select what you want to see: \n"
+				+ "1. Transactions today \n" +
+				"2. Transactions last week \n" +
+				"3. Transactions last month \n" +
+				"4. Transactions last year \n");
+
+		return  inputH.handleMenuPrompt();
+	}
+
+	private List<Transaction> getTransactionsForPeriod(int input, LocalDate today){
+		LocalDate start; 
+
+		switch (input) {
+		case 1:
+			start = today; 
+			break;
+		case 2:
+			start = today.minusWeeks(1);
+			break;
+		case 3:
+			start = today.minusMonths(1);
+			break;
+		case 4:
+			start = today.minusYears(1);
+			break;
+		default: 
+			output.displayError("Invalid option selected");
+			return null;
+		}
+		return financeHandler.getTransactionHandler().getTransactions().stream()
+				.filter(t -> !t.getDate().isBefore(start)&& t.getDate().isBefore(today.plusDays(1)))
 				.collect(Collectors.toList());
-				printTransactions(todayTransactions, "Transactions today");
-				break;
-			case 2:
-				LocalDate oneWeek = today.minusWeeks(1);
-				List<Transaction> lastWeekTransactions = financeHandler.getTransactionHandler().getTransactions().stream()
-						.filter(t -> t.getDate().isAfter(oneWeek.minusDays(1))
-								&& t.getDate().isBefore(today.plusDays(1)))
-						.collect(Collectors.toList());
-				printTransactions(lastWeekTransactions, "Transactions last week");
-				break;
-			case 3:
-				LocalDate oneMonth = today.minusMonths(1);
-				List<Transaction> lastMonthTransactions = financeHandler.getTransactionHandler().getTransactions().stream()
-						.filter(t -> t.getDate().isAfter(oneMonth.minusDays(1))
-								&& t.getDate().isBefore(today.plusDays(1)))
-						.collect(Collectors.toList());
-				printTransactions(lastMonthTransactions, "Transactions last month");
-				break;
-			case 4:
-				LocalDate oneYear = today.minusYears(1);
-				List<Transaction> lastYearTransactions = financeHandler.getTransactionHandler().getTransactions().stream()
-						.filter(t -> t.getDate().isAfter(oneYear.minusDays(1))
-								&& t.getDate().isBefore(today.plusDays(1)))
-						.collect(Collectors.toList());
-				printTransactions(lastYearTransactions, "Transactions last year");
-				break;
-			}
-		} else {
+	}
+
+	private String getTitle(int input) {
+		switch(input) {
+		case 1: return "Transactions today"; 
+		case 2: return "Transactions last week";
+		case 3: return "Transactions last month";
+		case 4: return "Transactions last year";
+		default: return "Unknown";
+		}
+	}
+
+	public void report() {
+		if (financeHandler.getTransactionHandler().getTransactions().isEmpty()) {
 			output.displayError("there is no transaction to show\n");
 			return;
+		}
+		int input = displayMenuAndGetChoice();
+
+		LocalDate today = LocalDate.now();
+		List<Transaction> filteredTransactions = getTransactionsForPeriod(input, today);
+
+		if (filteredTransactions != null) {
+			printTransactions(filteredTransactions, getTitle(input));
 		}
 	}
 
@@ -75,7 +88,7 @@ public class ReportGenerator {
 				.mapToDouble(t -> t.getAmount()).sum();
 		double expense = transactions.stream().filter(t -> t.getType() == Transaction.TransactionType.EXPENSE)
 				.mapToDouble(t -> t.getAmount()).sum();
-		
+
 		double total = income - expense;
 		transactions.forEach(output::displayTransaction);
 
