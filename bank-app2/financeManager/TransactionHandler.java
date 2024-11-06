@@ -5,8 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+import financeManager.Transaction.TransactionType;
 import userInterface.ConsoleOutput;
-import utils.InputHandler;
+import userInterface.InputHandler;
 
 public class TransactionHandler {
 	private ArrayList<Transaction> transactions;
@@ -31,7 +32,7 @@ public class TransactionHandler {
 
 	public void addTransaction() {
 		output.displayPrompt("Enter Type (INCOME/EXPENSE) \n");
-		Transaction.TransactionType type = inputH.readTransactionType();
+		Transaction.TransactionType type = inputH.handleTransactionType();
 		if (type != null) {
 			Transaction transaction = createTransaction(type);
 			if (transaction != null) {
@@ -45,7 +46,7 @@ public class TransactionHandler {
 
 	public void removeTransaction() {
 		output.displayPrompt("enter index of transaction to remove: ");
-		int index = inputH.readIndex() - 1;
+		int index = inputH.handleMenuPrompt() - 1;
 		if (index >= 0 && index < transactions.size()) {
 			transactions.remove(index);
 			financeHandler.getBalanceHandler().updateBalance(transactions.get(index));
@@ -68,7 +69,7 @@ public class TransactionHandler {
 				j++;
 				if (j == showLess) {
 					output.displayPrompt("----show more?(y/n) ----");
-					char input = inputH.showMore();
+					char input = inputH.handlePrompt();
 					if (input == 'Y') {
 						continue;
 					} else {
@@ -81,7 +82,7 @@ public class TransactionHandler {
 
 	private Transaction createTransaction(Transaction.TransactionType type) {
 		while (true) {
-			String[] input = inputH.readTransactionDetails();
+			String[] input = inputH.handleTransactionDetail();
 			try {
 				double amount = Double.parseDouble(input[0]);
 				String description = input[1];

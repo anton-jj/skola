@@ -1,7 +1,6 @@
 import financeManager.FinanceHandler;
 import userInterface.UserInterface;
 import utils.TransactionStorage;
-
 public class Main {
     public static void main(String[] args) {
 

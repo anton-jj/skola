@@ -4,31 +4,33 @@ package userInterface;
 import commands.Command;
 import commands.CommandHandler;
 import financeManager.FinanceHandler;
-import utils.InputHandler;
 
 public class UserInterface  {
    private final CommandHandler commandHandler;
-   private final InputHandler inputHandler;
+   private final InputHandler inputH;
+   private final ConsoleOutput output;
 
    public UserInterface(FinanceHandler financeManager) {
       this.commandHandler = new CommandHandler(financeManager);
-      this.inputHandler = new InputHandler();
+      this.inputH = new InputHandler();
+      this.output = new ConsoleOutput();
    }
 
    public void start() {
       while (true) {
       menu();
-      int input = inputHandler.readIndex();
+      int input = inputH.handleMenuPrompt();
       commandHandler.executeCommand(input);
    }
    }
 
    private void menu() {
-      System.out.println("--------Personal finance--------");
+      output.displayMessage("--------Personal finance--------");
+      /*TODO add something for this to consoleoutput*/
       for(Command command : commandHandler.getCommandMap().values()) {
          System.out.printf("%d. %s%n", command.getCommandId(), command.getDescription(), command.getName());
       }
-      System.out.println("--------------------------------");
+      output.displayMessage("--------------------------------");
    }
 
    }

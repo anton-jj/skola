@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import userInterface.ConsoleOutput;
-import utils.InputHandler;
+import userInterface.InputHandler;
 
 public class ReportGenerator {
 	private FinanceHandler financeHandler;
@@ -17,6 +17,7 @@ public class ReportGenerator {
 		this.output = new ConsoleOutput();
 	}
 
+	/*TODO try to split this metod*/
 	public void report() {
 		if (!financeHandler.getTransactionHandler().getTransactions().isEmpty()) {
 			output.displayMenu("Select what you want to see: \n"
@@ -24,7 +25,7 @@ public class ReportGenerator {
 					"2. Transactions last week \n" +
 					"3. Transactions last month \n" +
 					"4. Transactions last year \n");
-			int input = inputH.readIndex();
+			int input = inputH.handleMenuPrompt();
 			LocalDate today = LocalDate.now();
 			switch (input) {
 			case 1:
@@ -61,7 +62,6 @@ public class ReportGenerator {
 			output.displayError("there is no transaction to show\n");
 			return;
 		}
-
 	}
 
 	private void printTransactions(List<Transaction> transactions, String header) {
@@ -69,6 +69,7 @@ public class ReportGenerator {
 			output.displayMessage("There is no transactions for this period to show\n");
 			return;
 		}
+
 		output.displayMessage(header );
 		double income = transactions.stream().filter(t -> t.getType() == Transaction.TransactionType.INCOME)
 				.mapToDouble(t -> t.getAmount()).sum();
@@ -80,6 +81,6 @@ public class ReportGenerator {
 
 		output.displayTotal("Income during period: %.2f\n"
 				+ "Expenses during period: %.2f\n"
-				+ "Net result for the period%.2f\n", income, expense, total);
+				+ "Net result for the period: %.2f\n", income, expense, total);
 	}
 }
