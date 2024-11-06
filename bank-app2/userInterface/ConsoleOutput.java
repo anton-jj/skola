@@ -1,5 +1,6 @@
 package userInterface;
 
+import commands.Command;
 import financeManager.Transaction;
 
 public class ConsoleOutput implements Output{
@@ -37,5 +38,9 @@ public class ConsoleOutput implements Output{
 
 	public void displayTotal(String message, double income, double expense, double total) {
 		System.out.printf(message, income, expense, total);
+	}
+
+	public void displatComamnds(Command command) {
+		System.out.printf("%d. %s%n", command.getCommandId(), command.getDescription(), command.getName());
 	}
 }

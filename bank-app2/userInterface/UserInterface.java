@@ -26,9 +26,8 @@ public class UserInterface  {
 
    private void menu() {
       output.displayMessage("--------Personal finance--------");
-      /*TODO add something for this to consoleoutput*/
       for(Command command : commandHandler.getCommandMap().values()) {
-         System.out.printf("%d. %s%n", command.getCommandId(), command.getDescription(), command.getName());
+    	  output.displatComamnds(command);
       }
       output.displayMessage("--------------------------------");
    }
