@@ -27,7 +27,7 @@ public class UserInterface  {
    private void menu() {
       output.displayMessage("--------Personal finance--------");
       for(Command command : commandHandler.getCommandMap().values()) {
-    	  output.displatComamnds(command);
+    	  output.displayComamnds(command);
       }
       output.displayMessage("--------------------------------");
    }

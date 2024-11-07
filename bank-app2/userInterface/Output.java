@@ -8,4 +8,5 @@ public interface Output {
 	void displayMessage(String message);
 	void displayMenu(String menu);
 	void displayError(String error);
+	void displayTransaction(Transaction t, int i);
 }

@@ -39,9 +39,10 @@ public class TransactionHandler {
 				transactions.add(transaction);
 				financeHandler.getBalanceHandler().updateBalance(transaction);
 				output.displayMessage("Transaction added\n");
+			}else {
+				output.displayError("Invalid transaction you, Please Enter either 'Expense or Income' ");
 			}
 		}
-		output.displayError("Invalid transaction ype, Please Enter either 'Expense or Income' ");
 	}
 
 	public void removeTransaction() {
@@ -57,25 +58,28 @@ public class TransactionHandler {
 	}
 
 	public void listTransactions() {
-		int showLess = 20;
-		int j = 0;
 		if (transactions.isEmpty()) {
 			output.displayError("There is no transactions to show\n");
-		} else {
-			System.out.print("List of transaction\n");
-			for (int i = 0; i < transactions.size(); i++) {
-				Transaction t = transactions.get(i);
-				output.displayTransaction(t);
-				j++;
-				if (j == showLess) {
-					output.displayPrompt("----show more?(y/n) ----");
-					char input = inputH.handlePrompt();
-					if (input == 'Y') {
-						continue;
-					} else {
-						break;
-					}
-				}
+		}
+
+		final int showLess = 20;
+		int j = 0;	 
+
+		output.displayMessage("List of transaction\n");
+
+		for (int i = 0; i < transactions.size(); i++) {
+			Transaction t = transactions.get(i);
+			output.displayTransaction(t, i +1);
+			j++;
+
+			if (j >= showLess) {
+				output.displayPrompt("----show more?(y/n) ----");
+				char input = inputH.handlePrompt();
+
+				if (input != 'Y') {
+					break; 
+				} 
+				j = 0;
 			}
 		}
 	}
@@ -83,18 +87,39 @@ public class TransactionHandler {
 	private Transaction createTransaction(Transaction.TransactionType type) {
 		while (true) {
 			String[] input = inputH.handleTransactionDetail();
-			try {
-				double amount = Double.parseDouble(input[0]);
-				String description = input[1];
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate date = LocalDate.parse(input[2], formatter);
-				return new Transaction(amount, description, date, type);
-			} catch (NumberFormatException e) {
-				output.displayError("Invalid amount. Please eneter  a valid number");
-			} catch (DateTimeParseException e) {
-				output.displayError("Invalid date format. Please use yyyy-MM-dd");
-			}
-		}
 
+			double amount = parseAmount(input[0]);
+			if (amount == -1) {
+				output.displayError("Invalid amount. Please eneter a valid number");
+				continue;
+			}
+
+			String description = input[1];
+			LocalDate date = parseDate(input[2]);
+
+			if (date == null) {
+				output.displayError("Invalid date format. Please use yyyy-MM-dd");
+				continue;
+			}
+
+			return new Transaction(amount, description, date, type);
+		}
 	}
-}
+	
+	private double parseAmount(String amountString) {
+		try {
+			return Double.parseDouble(amountString);
+		} catch (NumberFormatException e) {
+			return -1;
+		}
+	}
+
+	private LocalDate parseDate(String dateString) {
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			return LocalDate.parse(dateString, formatter);
+		} catch (DateTimeParseException e) {
+			return null;
+		}
+	}
+} 

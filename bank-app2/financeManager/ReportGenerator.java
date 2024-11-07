@@ -1,8 +1,10 @@
 package financeManager;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import userInterface.ConsoleOutput;
 import userInterface.InputHandler;
@@ -49,6 +51,7 @@ public class ReportGenerator {
 		}
 		return financeHandler.getTransactionHandler().getTransactions().stream()
 				.filter(t -> !t.getDate().isBefore(start)&& t.getDate().isBefore(today.plusDays(1)))
+				.sorted(Comparator.comparing(Transaction::getDate).reversed())
 				.collect(Collectors.toList());
 	}
 
@@ -90,7 +93,8 @@ public class ReportGenerator {
 				.mapToDouble(t -> t.getAmount()).sum();
 
 		double total = income - expense;
-		transactions.forEach(output::displayTransaction);
+		IntStream.range(0, transactions.size())
+		.forEach(i -> output.displayTransaction(transactions.get(i), i));
 
 		output.displayTotal("Income during period: %.2f\n"
 				+ "Expenses during period: %.2f\n"
