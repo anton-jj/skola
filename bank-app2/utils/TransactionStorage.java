@@ -5,16 +5,26 @@ import financeManager.Transaction;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-public class TransactionStorage implements DataStrorage<ArrayList<Transaction>> {
+public class TransactionStorage implements DataStorage<ArrayList<Transaction>> {
 
     private final String filename;
-
-    public TransactionStorage() {
-        this.filename = "transactions.csv";
+    public TransactionStorage(String username) {
+        this.filename = username + "_transactions.csv";
     }
 
     @Override
     public void save(ArrayList<Transaction> transactions) throws IOException {
+    	File file = new File(filename);
+
+        if (!file.exists()) {
+            System.out.println("File does not exist. Creating new file: " + filename);
+            boolean created = file.createNewFile();
+            if (created) {
+                System.out.println("File created successfully.");
+            } else {
+                System.out.println("Failed to create file.");
+            }
+        }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (Transaction t : transactions) {
                 writer.write(String.format("%s,%f,%s,%s%n",

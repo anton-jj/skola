@@ -10,11 +10,11 @@ import userInterface.ConsoleOutput;
 import userInterface.InputHandler;
 
 public class ReportGenerator {
-	private FinanceHandler financeHandler;
 	private InputHandler inputH;
 	private ConsoleOutput output;
-	public ReportGenerator(FinanceHandler financeHandler){
-		this.financeHandler = financeHandler;
+	private TransactionHandler transactionHandler;
+	public ReportGenerator(TransactionHandler transactionHandler){
+		this.transactionHandler = transactionHandler;
 		this.inputH = new InputHandler();
 		this.output = new ConsoleOutput();
 	}
@@ -49,7 +49,7 @@ public class ReportGenerator {
 			output.displayError("Invalid option selected");
 			return null;
 		}
-		return financeHandler.getTransactionHandler().getTransactions().stream()
+		return transactionHandler.getTransactions().stream()
 				.filter(t -> !t.getDate().isBefore(start)&& t.getDate().isBefore(today.plusDays(1)))
 				.sorted(Comparator.comparing(Transaction::getDate).reversed())
 				.collect(Collectors.toList());
@@ -66,7 +66,7 @@ public class ReportGenerator {
 	}
 
 	public void report() {
-		if (financeHandler.getTransactionHandler().getTransactions().isEmpty()) {
+		if (transactionHandler.getTransactions().isEmpty()) {
 			output.displayError("there is no transaction to show\n");
 			return;
 		}

@@ -4,7 +4,7 @@ public abstract class Command{
     private final String name;
     private final String description;
     private int commandId;
-    private static int idCounter = 1;
+    protected static int idCounter = 1;
 
     public Command(String description, String name){
         this.name = name;

@@ -37,7 +37,7 @@ public class ConsoleOutput implements Output{
 	}
 
 	public void displayComamnds(Command command) {
-		System.out.printf("%d. %s%n", command.getCommandId(), command.getDescription(), command.getName());
+		System.out.printf("%d. %s%n", command.getCommandId() , command.getDescription(), command.getName());
 	}
 
 	@Override

@@ -7,4 +7,5 @@ public interface Input {
 	String[] handleTransactionDetail();
 	char handlePrompt();
 	int handleMenuPrompt();
+	String handleStringInput();
 }

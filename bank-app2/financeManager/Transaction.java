@@ -1,6 +1,5 @@
 package financeManager;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Transaction implements Comparable<Transaction> {

@@ -1,23 +1,29 @@
+import java.io.IOException;
+
 import financeManager.FinanceHandler;
-import userInterface.UserInterface;
-import utils.TransactionStorage;
+import user.Account;
+import user.AccountHandler;
+import userInterface.LoginUI;
+import userInterface.MainUI;
+import utils.UserStorage;
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		TransactionStorage transactionStorage = new TransactionStorage();
-		FinanceHandler financeHandler = new FinanceHandler();
 
-		try {
-			financeHandler.setTransactiontransactions(transactionStorage.load());
-			System.out.println("File loaded");
-		} catch (Exception e) {
-			System.out.print("No data to load\n");
-		}
+	        UserStorage users = new UserStorage();
+	        
+	        AccountHandler accountHandler = new AccountHandler(users);
 
-		UserInterface ui = new UserInterface(financeHandler);
-		ui.start();
+	        LoginUI loginUI = new LoginUI(accountHandler);
+	        loginUI.start();
 
+	        Account currentAccount = accountHandler.getCurrent();
+
+	        FinanceHandler financeHandler = new FinanceHandler(currentAccount);
+
+	        MainUI ui = new MainUI(financeHandler);
+	        ui.start();
 	}
 }
 

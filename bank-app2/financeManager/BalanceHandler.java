@@ -2,10 +2,10 @@ package financeManager;
 
 public class BalanceHandler {
     private double balance;
-    private FinanceHandler finanaceHandler;
+    TransactionHandler transactionHandler;
 
-    BalanceHandler(FinanceHandler financeHandler){
-        this.finanaceHandler = financeHandler;
+    BalanceHandler(TransactionHandler transactionHandler){
+    	this.transactionHandler = transactionHandler;
         this.balance = 0;
     }
     public double getBalance(){
@@ -24,7 +24,7 @@ public class BalanceHandler {
     }
 
     private void initialBalance(){
-        balance = finanaceHandler.getTransactionHandler().getTransactions().stream()
+        balance = transactionHandler.getTransactions().stream()
                 .mapToDouble(t -> t.getType() == Transaction.TransactionType.INCOME ?
                         t.getAmount() : - t.getAmount())
                 .sum();

@@ -11,12 +11,10 @@ import userInterface.InputHandler;
 
 public class TransactionHandler {
 	private ArrayList<Transaction> transactions;
-	private FinanceHandler financeHandler;
 	private InputHandler inputH;
 	private ConsoleOutput output;
 
-	public TransactionHandler(FinanceHandler financeHandler){
-		this.financeHandler = financeHandler;
+	public TransactionHandler(){
 		this.inputH = new InputHandler();
 		this.transactions = new ArrayList<>();
 		this.output = new ConsoleOutput();
@@ -37,7 +35,6 @@ public class TransactionHandler {
 			Transaction transaction = createTransaction(type);
 			if (transaction != null) {
 				transactions.add(transaction);
-				financeHandler.getBalanceHandler().updateBalance(transaction);
 				output.displayMessage("Transaction added\n");
 			}else {
 				output.displayError("Invalid transaction you, Please Enter either 'Expense or Income' ");
@@ -51,7 +48,6 @@ public class TransactionHandler {
 		if (index >= 0 && index < transactions.size()) {
 			output.displayTransaction(transactions.get(index));
 			transactions.remove(index);
-			financeHandler.getBalanceHandler().updateBalance(transactions.get(index));
 		} else {
 			output.displayError("Invalid index\n");
 		}

@@ -1,11 +1,8 @@
 package utils;
 
-
-
 import java.io.IOException;
 
-
-public interface DataStrorage<T> {
+public interface DataStorage<T> {
     void save(T data) throws IOException;
     T load() throws IOException;
 

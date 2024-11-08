@@ -57,4 +57,9 @@ public class InputHandler implements Input{
 	public int handleMenuPrompt() {
 		return scanner.nextInt();
 	}
+
+	@Override
+	public String handleStringInput() {
+		return scanner.next().trim();
+	}
 }
