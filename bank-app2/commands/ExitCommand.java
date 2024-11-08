@@ -10,10 +10,10 @@ public class ExitCommand extends Command{
     public ExitCommand(FinanceHandler financeHandler){
         super("Exit program", "Exit");
         this.financeHandler = financeHandler;
-        this.transactionStorage = new TransactionStorage(financeHandler.getAccount().getUsername());
     }
     @Override
     public void execute() {
+        this.transactionStorage = new TransactionStorage(financeHandler.getAccount().getUsername());
         try {
             transactionStorage.save(financeHandler.getTransactionHandler().getTransactions());
         } catch (IOException e) {

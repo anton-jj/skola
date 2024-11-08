@@ -27,7 +27,7 @@ public class LoginUI extends UserInterface{
 				if (handleLogin()) return;
 				break;
 			case 2: 
-				if (handleCreateAccount()) return; 
+				 handleCreateAccount(); 
 				break;
 			case 0:
 				output.displayMessage("Exiting...");
@@ -64,7 +64,7 @@ public class LoginUI extends UserInterface{
 		}
 	}
 
-	private boolean handleCreateAccount() {
+	private void handleCreateAccount() {
 		output.displayMessage("Enter username:");
 		String username = input.handleStringInput();
 		output.displayMessage("Enter password:");
@@ -72,10 +72,8 @@ public class LoginUI extends UserInterface{
 
 		if (create.createAccount(username, password)) {
 			System.out.println("Account successfully created!");
-			return true;
 		} else {
 			System.out.println("Account creation failed. Try again.");
-			return false;
 		}	
 	}
 }
