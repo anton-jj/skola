@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-import financeManager.Transaction.TransactionType;
 import userInterface.ConsoleOutput;
 import userInterface.InputHandler;
 
@@ -49,9 +49,9 @@ public class TransactionHandler {
 		output.displayPrompt("enter index of transaction to remove: ");
 		int index = inputH.handleMenuPrompt() - 1;
 		if (index >= 0 && index < transactions.size()) {
+			output.displayTransaction(transactions.get(index));
 			transactions.remove(index);
 			financeHandler.getBalanceHandler().updateBalance(transactions.get(index));
-			output.displayMessage("Transaction Removed\n");
 		} else {
 			output.displayError("Invalid index\n");
 		}
@@ -61,11 +61,13 @@ public class TransactionHandler {
 		if (transactions.isEmpty()) {
 			output.displayError("There is no transactions to show\n");
 		}
-
+		
 		final int showLess = 20;
 		int j = 0;	 
 
 		output.displayMessage("List of transaction\n");
+
+		transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
 
 		for (int i = 0; i < transactions.size(); i++) {
 			Transaction t = transactions.get(i);
