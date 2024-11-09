@@ -1,9 +1,11 @@
 package user;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import utils.PasswordUtil;
 import utils.UserStorage;
 
 public class AccountHandler {
@@ -29,16 +31,16 @@ public class AccountHandler {
         }
     } */
 
-    public Account authenticate(String username, String password) {
+    public Account authenticate(String username, String password) throws NoSuchAlgorithmException {
         Account account = accounts.get(username);
-        if (account != null && account.getPassword().equals(password)) {
+        if (account != null && !PasswordUtil.checkPassword(account.getPassword(), password)) {
         	currentAccount = account;
             return account;
         }
         return null;
     }
 
-    public Account createAccount(String username, String password) {
+    public Account createAccount(String username, String password) throws NoSuchAlgorithmException {
         Account newAccount = new Account(username, password);
         accounts.put(username, newAccount);
         saveAccounts();

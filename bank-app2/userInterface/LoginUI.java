@@ -1,5 +1,7 @@
 package userInterface;
 
+import java.security.NoSuchAlgorithmException;
+
 import commands.CreateAccountCommand;
 import commands.LoginCommand;
 import user.AccountHandler;
@@ -24,7 +26,11 @@ public class LoginUI extends UserInterface{
 			choice = input.handleMenuPrompt();
 			switch(choice) {
 			case 1: 
-				if (handleLogin()) return;
+				try {
+					if (handleLogin()) return;
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				}
 				break;
 			case 2: 
 				 handleCreateAccount(); 
@@ -49,7 +55,7 @@ public class LoginUI extends UserInterface{
 						+ "------------------\n");
 	}
 
-	private boolean handleLogin() {
+	private boolean handleLogin() throws NoSuchAlgorithmException {
 		output.displayMessage("Enter username:");
 		String username = input.handleStringInput();
 		output.displayMessage("Enter password:");
@@ -70,10 +76,15 @@ public class LoginUI extends UserInterface{
 		output.displayMessage("Enter password:");
 		String password = input.handleStringInput();
 
-		if (create.createAccount(username, password)) {
-			System.out.println("Account successfully created!");
-		} else {
-			System.out.println("Account creation failed. Try again.");
+		try {
+			if (create.createAccount(username, password)) {
+				System.out.println("Account successfully created!");
+			} else {
+				System.out.println("Account creation failed. Try again.");
+			}
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}	
 	}
 }

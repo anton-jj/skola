@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +43,11 @@ public class UserStorage implements DataStorage<Map<String, Account>>{
 					System.out.println(username);
 					String password = parts[1];
 					System.out.println(password);
+					try {
 					accounts.put(username, new Account(username, password));
+					} catch (NoSuchAlgorithmException e) {
+						
+					}
 					System.out.println(accounts.get(username));
 				}
 			}

@@ -1,13 +1,16 @@
 package user;
 
+import java.security.NoSuchAlgorithmException;
+
+import utils.PasswordUtil;
 
 public class Account {
 	private String username;
-	private String password;
+	private String hashPassword;
 	
-	public Account(String username, String password) {
+	public Account(String username, String password) throws NoSuchAlgorithmException {
 		this.username = username; 
-		this.password = password; 
+		this.hashPassword = PasswordUtil.hashPassword(password); 
 		
 	}
 	public String getUsername() {
@@ -15,6 +18,6 @@ public class Account {
 	}
 
 	public String getPassword() {
-		return password;
+		return hashPassword;
 	}
 }

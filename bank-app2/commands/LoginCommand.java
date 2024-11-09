@@ -1,5 +1,7 @@
 package commands;
 
+import java.security.NoSuchAlgorithmException;
+
 import user.Account;
 import user.AccountHandler;
 
@@ -19,7 +21,7 @@ public class LoginCommand extends Command{
 
 	}
 
-	public boolean authenticate(String username, String password) {
+	public boolean authenticate(String username, String password) throws NoSuchAlgorithmException {
 		Account account = accountHandler.authenticate(username, password);
 		return account != null;
 	}

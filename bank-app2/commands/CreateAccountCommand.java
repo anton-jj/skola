@@ -1,5 +1,7 @@
 package commands;
 
+import java.security.NoSuchAlgorithmException;
+
 import user.Account;
 import user.AccountHandler;
 
@@ -15,7 +17,7 @@ public class CreateAccountCommand extends Command{
 	public void execute() {
 		//
 	}
-	  public boolean createAccount(String username, String password) {
+	  public boolean createAccount(String username, String password) throws NoSuchAlgorithmException {
 	        Account newAccount = accountHandler.createAccount(username, password);
 	        return newAccount != null;
 	    }
