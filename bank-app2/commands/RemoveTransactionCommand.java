@@ -10,7 +10,6 @@ public class RemoveTransactionCommand extends Command{
         this.financeHandler = financeHandler;
     }
 
-
     @Override
     public void execute() {
         financeHandler.removeTransaction();

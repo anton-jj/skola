@@ -14,5 +14,4 @@ public class AddTransactionCommand extends Command{
     public void execute() {
        financeHandler.addTransaction();
     }
-
 }

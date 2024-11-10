@@ -13,6 +13,7 @@ public class ReportGenerator {
 	private InputHandler inputH;
 	private ConsoleOutput output;
 	private TransactionHandler transactionHandler;
+
 	public ReportGenerator(TransactionHandler transactionHandler){
 		this.transactionHandler = transactionHandler;
 		this.inputH = new InputHandler();
@@ -49,6 +50,7 @@ public class ReportGenerator {
 			output.displayError("Invalid option selected");
 			return null;
 		}
+
 		return transactionHandler.getTransactions().stream()
 				.filter(t -> !t.getDate().isBefore(start)&& t.getDate().isBefore(today.plusDays(1)))
 				.sorted(Comparator.comparing(Transaction::getDate).reversed())
@@ -70,8 +72,8 @@ public class ReportGenerator {
 			output.displayError("there is no transaction to show\n");
 			return;
 		}
-		int input = displayMenuAndGetChoice();
 
+		int input = displayMenuAndGetChoice();
 		LocalDate today = LocalDate.now();
 		List<Transaction> filteredTransactions = getTransactionsForPeriod(input, today);
 

@@ -24,7 +24,6 @@ public class ConsoleOutput implements Output{
 	@Override
 	public void displayPrompt(String prompt) {
 		System.out.printf("%s \n",prompt);
-
 	}
 
 	@Override

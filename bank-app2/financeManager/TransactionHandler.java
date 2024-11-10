@@ -31,6 +31,7 @@ public class TransactionHandler {
 	public void addTransaction() {
 		output.displayPrompt("Enter Type (INCOME/EXPENSE) \n");
 		Transaction.TransactionType type = inputH.handleTransactionType();
+
 		if (type != null) {
 			Transaction transaction = createTransaction(type);
 			if (transaction != null) {
@@ -45,6 +46,7 @@ public class TransactionHandler {
 	public void removeTransaction() {
 		output.displayPrompt("enter index of transaction to remove: ");
 		int index = inputH.handleMenuPrompt() - 1;
+
 		if (index >= 0 && index < transactions.size()) {
 			output.displayTransaction(transactions.get(index));
 			output.displayMessage("was removed");
@@ -58,12 +60,10 @@ public class TransactionHandler {
 		if (transactions.isEmpty()) {
 			output.displayError("There is no transactions to show\n");
 		}
-		
+
 		final int showLess = 20;
 		int j = 0;	 
-
 		output.displayMessage("List of transaction\n");
-
 		transactions.sort(Comparator.comparing(Transaction::getDate).reversed());
 
 		for (int i = 0; i < transactions.size(); i++) {
@@ -104,7 +104,7 @@ public class TransactionHandler {
 			return new Transaction(amount, description, date, type);
 		}
 	}
-	
+
 	private double parseAmount(String amountString) {
 		try {
 			return Double.parseDouble(amountString);

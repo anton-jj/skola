@@ -32,6 +32,7 @@ public class InputHandler implements Input{
 	@Override
 	public String[] handleTransactionDetail() {
 		output.displayPrompt("Make transaction (amount) (description) (date yyyy-MM-dd)");
+
 		while(true) {
 			String input = scanner.nextLine().trim();
 			if (input.isEmpty()) {

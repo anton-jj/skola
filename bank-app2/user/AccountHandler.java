@@ -9,7 +9,6 @@ import utils.PasswordUtil;
 import utils.UserStorage;
 
 public class AccountHandler {
-
     private Map<String, Account> accounts;
     private UserStorage userStorage;
     private Account currentAccount;
@@ -19,12 +18,12 @@ public class AccountHandler {
         this.accounts = new HashMap<>();
         this.accounts = userStorage.load();
         this.currentAccount = null;
-
     }
 
 
     public Account authenticate(String username, String password) throws NoSuchAlgorithmException {
         Account account = accounts.get(username);
+
         if (account != null && !PasswordUtil.checkPassword(account.getPassword(), password)) {
         	currentAccount = account;
             return account;

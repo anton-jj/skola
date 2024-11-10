@@ -13,13 +13,14 @@ public class CreateAccountCommand extends Command{
 		Command.idCounter = 1;
 		this.accountHandler = accountHandler;
 	}
-	@Override
-	public void execute() {
-		//
-	}
-	  public boolean createAccount(String username, String password) throws NoSuchAlgorithmException {
+
+	  public boolean execute(String username, String password) throws NoSuchAlgorithmException {
 	        Account newAccount = accountHandler.createAccount(username, password);
 	        return newAccount != null;
 	    }
 
+	@Override
+	public void execute() {
+		// TODO Auto-generated method stub
+	}
 }

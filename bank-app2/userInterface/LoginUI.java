@@ -21,6 +21,7 @@ public class LoginUI extends UserInterface{
 	@Override 
 	public void start() {
 		int choice = -1;
+
 		while(choice != 0) {
 			menu();
 			choice = input.handleMenuPrompt();
@@ -33,7 +34,7 @@ public class LoginUI extends UserInterface{
 				}
 				break;
 			case 2: 
-				 handleCreateAccount(); 
+				handleCreateAccount(); 
 				break;
 			case 0:
 				output.displayMessage("Exiting...");
@@ -61,7 +62,7 @@ public class LoginUI extends UserInterface{
 		output.displayMessage("Enter password:");
 		String password = input.handleStringInput();
 
-		if (login.authenticate(username, password)) {
+		if (login.execute(username, password)) {
 			output.displayMessage("Login successful!");
 			return true;
 		} else {
@@ -77,7 +78,7 @@ public class LoginUI extends UserInterface{
 		String password = input.handleStringInput();
 
 		try {
-			if (create.createAccount(username, password)) {
+			if (create.execute(username, password)) {
 				System.out.println("Account successfully created!");
 			} else {
 				System.out.println("Account creation failed. Try again.");

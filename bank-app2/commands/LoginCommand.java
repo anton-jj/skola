@@ -16,13 +16,13 @@ public class LoginCommand extends Command{
 		this.accountHandler = accountHandler;
 	}
 
-	@Override
-	public void execute() {
-
-	}
-
-	public boolean authenticate(String username, String password) throws NoSuchAlgorithmException {
+	public boolean execute(String username, String password) throws NoSuchAlgorithmException {
 		Account account = accountHandler.authenticate(username, password);
 		return account != null;
+	}
+
+	@Override
+	public void execute() {
+		// TODO Auto-generated method stub
 	}
 }

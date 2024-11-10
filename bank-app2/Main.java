@@ -11,23 +11,22 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
+		UserStorage users = new UserStorage();
 
-	        UserStorage users = new UserStorage();
-	        
-	        AccountHandler accountHandler = new AccountHandler(users);
-	        
-	        LoginUI loginUI = new LoginUI(accountHandler);
-	        loginUI.start();
-	        
-	        Account currentAccount = accountHandler.getCurrent();
+		AccountHandler accountHandler = new AccountHandler(users);
 
-	        TransactionStorage transactionStoge = new TransactionStorage(currentAccount.getUsername());
-	        FinanceHandler financeHandler = new FinanceHandler(currentAccount);
+		LoginUI loginUI = new LoginUI(accountHandler);
+		loginUI.start();
 
-	        financeHandler.loadTransactions(transactionStoge);
-	        
-	        MainUI ui = new MainUI(financeHandler);
-	        ui.start();
+		Account currentAccount = accountHandler.getCurrent();
+
+		TransactionStorage transactionStoge = new TransactionStorage(currentAccount.getUsername());
+		FinanceHandler financeHandler = new FinanceHandler(currentAccount);
+
+		financeHandler.loadTransactions(transactionStoge);
+
+		MainUI ui = new MainUI(financeHandler);
+		ui.start();
 	}
 }
 
