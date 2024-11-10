@@ -47,6 +47,7 @@ public class TransactionHandler {
 		int index = inputH.handleMenuPrompt() - 1;
 		if (index >= 0 && index < transactions.size()) {
 			output.displayTransaction(transactions.get(index));
+			output.displayMessage("was removed");
 			transactions.remove(index);
 		} else {
 			output.displayError("Invalid index\n");

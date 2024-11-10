@@ -22,14 +22,6 @@ public class AccountHandler {
 
     }
 
-    /*public void login(String username, String password) {
-        Account account = authenticate(username, password);
-        if (account != null) {
-            currentAccount = account;
-        } else {
-            System.out.println("Invalid username or password");
-        }
-    } */
 
     public Account authenticate(String username, String password) throws NoSuchAlgorithmException {
         Account account = accounts.get(username);

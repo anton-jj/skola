@@ -40,15 +40,12 @@ public class UserStorage implements DataStorage<Map<String, Account>>{
 				String[] parts = line.split(",");
 				if (parts.length == 2) {
 					String username = parts[0];
-					System.out.println(username);
 					String password = parts[1];
-					System.out.println(password);
 					try {
 					accounts.put(username, new Account(username, password));
 					} catch (NoSuchAlgorithmException e) {
 						
 					}
-					System.out.println(accounts.get(username));
 				}
 			}
 		}

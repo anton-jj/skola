@@ -92,9 +92,9 @@ public class ReportGenerator {
 		double expense = transactions.stream().filter(t -> t.getType() == Transaction.TransactionType.EXPENSE)
 				.mapToDouble(t -> t.getAmount()).sum();
 
-		double total = income - expense;
+		double total = income + expense;
 		IntStream.range(0, transactions.size())
-		.forEach(i -> output.displayTransaction(transactions.get(i), i));
+		.forEach(i -> output.displayTransaction(transactions.get(i), i+1));
 
 		output.displayTotal("Income during period: %.2f\n"
 				+ "Expenses during period: %.2f\n"

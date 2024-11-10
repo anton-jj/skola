@@ -83,7 +83,6 @@ public class LoginUI extends UserInterface{
 				System.out.println("Account creation failed. Try again.");
 			}
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
