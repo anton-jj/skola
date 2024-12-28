@@ -22,13 +22,9 @@ public class FinanceHandler {
 
 
 	public void loadTransactions(TransactionStorage transactionStorage) throws IOException {
-		try {
-			transactionHandler.setTransactions(transactionStorage.load());
-			System.out.println("Transactions loaded.");
-		} catch (IOException e) {
-			System.out.println("No data to load.");
-		}
-	} 
+        transactionHandler.setTransactions(transactionStorage.load());
+        System.out.println("Transactions loaded.");
+    }
 
 	public Account getAccount() {
 		return this.account;

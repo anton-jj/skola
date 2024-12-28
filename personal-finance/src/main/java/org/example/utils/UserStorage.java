@@ -32,7 +32,7 @@ public class UserStorage implements DataStorage<Map<String, Account>>{
 	}
 
 	@Override
-	public Map<String, Account> load() throws IOException {
+	public Map<String, Account> load() {
 		Map<String, Account> accounts = new HashMap<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader(filename))){
 			String line; 

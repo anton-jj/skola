@@ -51,7 +51,7 @@ public class TransactionStorage implements DataStorage<ArrayList<Transaction>> {
 	}
 
 	@Override
-	public ArrayList<Transaction> load() throws IOException {
+	public ArrayList<Transaction> load() {
 		ArrayList<Transaction> transactions = new ArrayList<>();
 		File file = new File(directoryName, filename);
 
