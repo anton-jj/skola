@@ -19,12 +19,15 @@ public class DataBase {
     }
 
 
-    public static org.example.utils.DataBase getInstance() {
+    public static DataBase getInstance() {
+        if (instance == null) {
+            return new DataBase();
+        }
         return instance;
     }
 
     public Connection getConnection() {
-      return conn;
+      return this.conn;
   }
 
   public void createTables(){

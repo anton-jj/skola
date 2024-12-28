@@ -6,6 +6,7 @@ import org.example.user.AccountHandler;
 import org.example.userInterface.LoginUI;
 import org.example.userInterface.MainUI;
 import org.example.utils.DataBase;
+import org.example.utils.DataBaseUserStorage;
 import org.example.utils.TransactionStorage;
 import org.example.utils.UserStorage;
 
@@ -15,15 +16,16 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        DataBase db = new DataBase();
-        try {
-            db.createTables();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        UserStorage users = new UserStorage();
 
-        AccountHandler accountHandler = new AccountHandler(users);
+        DataBase db = new DataBase();
+        db.getConnection();
+        db.createTables();
+
+
+        UserStorage users = new UserStorage();
+        DataBaseUserStorage dbusers = new DataBaseUserStorage();
+
+        AccountHandler accountHandler = new AccountHandler(users, dbusers);
 
         LoginUI loginUI = new LoginUI(accountHandler);
         loginUI.start();

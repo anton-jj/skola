@@ -7,13 +7,16 @@ import java.util.Map;
 
 import org.example.utils.PasswordUtil;
 import org.example.utils.UserStorage;
+import org.example.utils.DataBaseUserStorage;
 
 public class AccountHandler {
     private Map<String, Account> accounts;
     private UserStorage userStorage;
+    private DataBaseUserStorage dbStorage;
     private Account currentAccount;
 
-    public AccountHandler(UserStorage userStorage) throws IOException {
+    public AccountHandler(UserStorage userStorage, DataBaseUserStorage dbStorage) throws IOException {
+        this.dbStorage = dbStorage;
         this.userStorage = userStorage;
         this.accounts = new HashMap<>();
         this.accounts = userStorage.load();
@@ -22,28 +25,23 @@ public class AccountHandler {
 
 
     public Account authenticate(String username, String password) throws NoSuchAlgorithmException {
-        Account account = accounts.get(username);
+        Account fileAccount = accounts.get(username);
+        Account DBAccount = dbStorage.findUser(username);
 
-        if (account != null && !PasswordUtil.checkPassword(account.getPassword(), password)) {
-        	currentAccount = account;
-            return account;
+        if (DBAccount != null && !PasswordUtil.checkPassword(DBAccount.getPassword(), password)) {
+        	currentAccount = DBAccount;
+            return DBAccount;
         }
         return null;
     }
 
-    public Account createAccount(String username, String password) throws NoSuchAlgorithmException {
-        Account newAccount = new Account(username, password);
-        accounts.put(username, newAccount);
-        saveAccounts();
-        return newAccount;
-    }
+    public Account createAccount(int id, String username, String password) throws NoSuchAlgorithmException {
+        Account newAccount = new Account(id, username, password);
 
-    private void saveAccounts() {
-        try {
-            userStorage.save(accounts);
-        } catch (IOException e) {
-            System.out.println("Error saving accounts: " + e.getMessage());
-        }
+        accounts.put(username, newAccount);
+        userStorage.save(accounts);
+        dbStorage.save(accounts);
+        return newAccount;
     }
 
     public Account getCurrent() {

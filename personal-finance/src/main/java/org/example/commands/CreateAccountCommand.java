@@ -15,7 +15,7 @@ public class CreateAccountCommand extends Command{
 	}
 
 	  public boolean execute(String username, String password) throws NoSuchAlgorithmException {
-	        Account newAccount = accountHandler.createAccount(username, password);
+	        Account newAccount = accountHandler.createAccount(0, username, password);
 	        return newAccount != null;
 	    }
 

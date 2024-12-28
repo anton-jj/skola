@@ -14,11 +14,7 @@ public class ExitCommand extends Command{
     @Override
     public void execute() {
         this.transactionStorage = new TransactionStorage(financeHandler.getAccount().getUsername());
-        try {
-            transactionStorage.save(financeHandler.getTransactionHandler().getTransactions());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        transactionStorage.save(financeHandler.getTransactionHandler().getTransactions());
         System.exit(0);
     }
 }
