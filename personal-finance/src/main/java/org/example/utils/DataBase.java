@@ -55,14 +55,17 @@ public class DataBase {
             createTable.execute("CREATE TABLE IF NOT EXISTS users (" +
                     "id SERIAL PRIMARY KEY," +
                     "username TEXT NOT NULL UNIQUE," +
-                    "password TEXT NOT NULL)");
+                    "password TEXT NOT NULL," +
+                    "balance DECIMAL(10, 2) DEFAULT 0)");
 
             createTable.execute("CREATE TABLE IF NOT EXISTS transactions (" +
                     "id SERIAL PRIMARY KEY," +
                     "description TEXT, " +
                     "type text, " +
-                    "user_id INT REFERENCES users(id), " +
-                    "date DATE)");
+                    "user_id INT REFERENCES users(id)," +
+                    "amount DECIMAL(10, 2)," +
+                    "date DATE)"
+                    );
         } catch (RuntimeException | SQLException e) {
           throw new RuntimeException(e);
         }

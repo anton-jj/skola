@@ -12,6 +12,7 @@ import org.example.utils.UserStorage;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
@@ -19,12 +20,11 @@ public class Main {
 
         DataBase db = DataBase.getInstance();
         db.createTables();
+        Connection conn = db.getConnection();
 
-
-        UserStorage users = new UserStorage();
         DataBaseUserStorage dbusers = new DataBaseUserStorage();
 
-        AccountHandler accountHandler = new AccountHandler(users, dbusers);
+        AccountHandler accountHandler = new AccountHandler(dbusers);
 
         LoginUI loginUI = new LoginUI(accountHandler);
         loginUI.start();

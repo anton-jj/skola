@@ -13,7 +13,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.postgresql:postgresql:42.7.4")
-
+    implementation ("org.mindrot:jbcrypt:0.3m")
 }
 
 tasks.test {

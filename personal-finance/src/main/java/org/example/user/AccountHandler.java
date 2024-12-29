@@ -14,13 +14,21 @@ public class AccountHandler {
     private DataBaseUserStorage dbStorage;
     private Account currentAccount;
 
-    public AccountHandler(UserStorage userStorage, DataBaseUserStorage dbStorage) throws IOException {
+    public AccountHandler(DataBaseUserStorage dbStorage) throws IOException {
         this.dbStorage = dbStorage;
         this.accounts = new HashMap<>();
         this.accounts = dbStorage.load();
         this.currentAccount = null;
     }
 
+    public boolean deleteAccount(String username) {
+        Account account = dbStorage.findUser(username);
+
+        if (account != null) {
+           return dbStorage.deleteUser(username);
+        }
+        return false;
+    }
 
     public Account authenticate(String username, String password) throws NoSuchAlgorithmException {
         Account account = dbStorage.findUser(username);

@@ -2,15 +2,21 @@ package org.example.utils;
 
 import org.example.user.Account;
 
+import javax.xml.crypto.Data;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
-    private static final String SELECT_USER_QUERY = "SELECT * FROM users WHERE username = ?";
-    private static final String INSERT_USER_QUERY = "INSERT INTO users (username, password) VALUES (?, ?)";
-    private static final String UPDATE_USER_QUERY = "UPDATE users SET password = ? WHERE username = ?";
+    private final String SELECT_USER_QUERY = "SELECT * FROM users WHERE username = ?";
+    private final String INSERT_USER_QUERY = "INSERT INTO users (username, password) VALUES (?, ?)";
+    private final String UPDATE_USER_QUERY = "UPDATE users SET password = ? WHERE username = ?";
+    private final String DELETE_USER_QUERY = "DELETE FROM users WHERE username = ?";
+
+    Connection conn = null;
+    Statement statement = null;
+    ResultSet res = null;
 
     public Account findUser(String username ) {
         Connection conn = null;
@@ -89,9 +95,6 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
     @Override
     public Map<String, Account> load() {
         Map<String, Account> accounts = new HashMap<>();
-        Connection conn = null;
-        Statement statement = null;
-        ResultSet res = null;
 
         try {
             conn = DataBase.getInstance().getConnection();
@@ -118,5 +121,16 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
         return accounts;
     }
 
-    //
-}
+    public boolean deleteUser(String username) {
+       try (Connection conn = DataBase.getInstance().getConnection();
+            PreparedStatement ps =  conn.prepareStatement(DELETE_USER_QUERY)) {
+
+           ps.setString(1, username);
+           int rows = ps.executeUpdate();
+           return rows > 0;
+           } catch (SQLException e ) {
+            System.err.println("error deleting user" + e);
+            return false;
+           }
+       }
+    }
