@@ -10,20 +10,35 @@ public class DataBase {
     private Connection conn;
     String url = "jdbc:postgresql://localhost/finance?user=postgres&password=password";
 
-    public DataBase() {
-        try  {
-            conn = DriverManager.getConnection(url);
-        }  catch (SQLException e) {
-            System.out.println("Error connecting to database" + e.getMessage());
-        }
-    }
+    private DataBase(){
 
+    }
 
     public static DataBase getInstance() {
         if (instance == null) {
-            return new DataBase();
+            synchronized (DataBase.class) {
+                if (instance == null) {
+                    instance = new DataBase();
+                    instance.createConnection();
+                }
+            }
         }
         return instance;
+    }
+
+    private void createConnection() {
+        try {
+            System.out.println("Attempting to connect to database...");
+            conn = DriverManager.getConnection(url);
+            if (conn != null) {
+                System.out.println("Database connected successfully!");
+            } else {
+                System.out.println("Database connection failed: conn is null.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error connecting to database: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public Connection getConnection() {
@@ -31,12 +46,15 @@ public class DataBase {
   }
 
   public void createTables(){
-      Statement createTable = null;
-      try {
-          createTable = conn.createStatement();
+
+        if (conn == null) {
+            System.out.println("failed to connect to database");
+            return;
+        }
+        try (Statement createTable = conn.createStatement()) {
             createTable.execute("CREATE TABLE IF NOT EXISTS users (" +
                     "id SERIAL PRIMARY KEY," +
-                    "username TEXT NOT NULL," +
+                    "username TEXT NOT NULL UNIQUE," +
                     "password TEXT NOT NULL)");
 
             createTable.execute("CREATE TABLE IF NOT EXISTS transactions (" +
@@ -45,8 +63,8 @@ public class DataBase {
                     "type text, " +
                     "user_id INT REFERENCES users(id), " +
                     "date DATE)");
-      } catch (RuntimeException | SQLException e) {
+        } catch (RuntimeException | SQLException e) {
           throw new RuntimeException(e);
-      }
+        }
   }
 }
