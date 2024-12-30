@@ -2,8 +2,6 @@ package org.example.utils;
 
 import org.example.user.Account;
 
-import javax.xml.crypto.Data;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +22,7 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
         ResultSet res = null;
 
         try {
-            conn = DataBase.getInstance().getConnection();
+            conn = Database.getInstance().getConnection();
             ps = conn.prepareStatement(SELECT_USER_QUERY);
             ps.setString(1, username);
             res = ps.executeQuery();
@@ -56,7 +54,7 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
         ResultSet res = null;
 
         try  {
-            conn = DataBase.getInstance().getConnection();
+            conn = Database.getInstance().getConnection();
             for (Account account : data.values()) {
                 String hashedPassword = PasswordUtil.hashPassword(account.getPassword());
 
@@ -99,7 +97,7 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
         Map<String, Account> accounts = new HashMap<>();
 
         try {
-            conn = DataBase.getInstance().getConnection();
+            conn = Database.getInstance().getConnection();
             statement = conn.createStatement();
             res = statement.executeQuery("SELECT * FROM users");
 
@@ -124,7 +122,7 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
     }
 
     public boolean deleteUser(String username) {
-       try (Connection conn = DataBase.getInstance().getConnection();
+       try (Connection conn = Database.getInstance().getConnection();
             PreparedStatement ps =  conn.prepareStatement(DELETE_USER_QUERY)) {
 
            ps.setString(1, username);

@@ -5,20 +5,17 @@ import org.example.user.Account;
 import org.example.user.AccountHandler;
 import org.example.userInterface.LoginUI;
 import org.example.userInterface.MainUI;
-import org.example.utils.DataBase;
+import org.example.utils.Database;
 import org.example.utils.DataBaseUserStorage;
 import org.example.utils.TransactionStorage;
-import org.example.utils.UserStorage;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        DataBase db = DataBase.getInstance();
+        Database db = Database.getInstance();
         db.createTables();
         Connection conn = db.getConnection();
 

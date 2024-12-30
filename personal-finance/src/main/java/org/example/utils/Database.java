@@ -5,20 +5,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DataBase {
-    private static DataBase instance;
+public class Database {
+    private static Database instance;
     private Connection conn;
     String url = "jdbc:postgresql://localhost/finance?user=postgres&password=password";
 
-    private DataBase(){
+    private Database(){
 
     }
 
-    public static DataBase getInstance() {
+    public static Database getInstance() {
         if (instance == null) {
-            synchronized (DataBase.class) {
+            synchronized (Database.class) {
                 if (instance == null) {
-                    instance = new DataBase();
+                    instance = new Database();
                     instance.createConnection();
                 }
             }
