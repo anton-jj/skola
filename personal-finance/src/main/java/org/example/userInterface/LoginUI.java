@@ -27,11 +27,7 @@ public class LoginUI extends UserInterface{
 			choice = input.handleMenuPrompt();
 			switch(choice) {
 			case 1: 
-				try {
 					if (handleLogin()) return;
-				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
-				}
 				break;
 			case 2: 
 				handleCreateAccount(); 
@@ -56,7 +52,7 @@ public class LoginUI extends UserInterface{
 						+ "------------------\n");
 	}
 
-	private boolean handleLogin() throws NoSuchAlgorithmException {
+	private boolean handleLogin()  {
 		output.displayMessage("Enter username:");
 		String username = input.handleStringInput();
 		output.displayMessage("Enter password:");
@@ -83,8 +79,8 @@ public class LoginUI extends UserInterface{
 			} else {
 				System.out.println("Account creation failed. Try again.");
 			}
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}	
+		} catch (RuntimeException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

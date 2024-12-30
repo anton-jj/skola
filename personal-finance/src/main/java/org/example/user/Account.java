@@ -9,10 +9,10 @@ public class Account {
 	private String username;
 	private String hashPassword;
 
-	public Account(int id, String username, String password) throws NoSuchAlgorithmException {
+	public Account(int id, String username, String hashPassword) {
 		this.id = id;
 		this.username = username; 
-		this.hashPassword = PasswordUtil.hashPassword(password); 
+		this.hashPassword = hashPassword;
 	}
 
 	public String getUsername() {

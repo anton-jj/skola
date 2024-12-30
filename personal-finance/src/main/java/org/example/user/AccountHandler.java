@@ -30,17 +30,22 @@ public class AccountHandler {
         return false;
     }
 
-    public Account authenticate(String username, String password) throws NoSuchAlgorithmException {
+    public Account authenticate(String username, String password) {
         Account account = dbStorage.findUser(username);
+        if (account != null)  {
+            String hashedPw = account.getPassword();
 
-        if (account != null && !PasswordUtil.checkPassword(account.getPassword(), password)) {
-        	currentAccount = account;
-            return account;
+            if (!PasswordUtil.checkPassword(password, hashedPw)) {
+                String newHashedPw = PasswordUtil.hashPassword(password);
+            }else {
+                currentAccount = account;
+                return account;
+            }
         }
         return null;
     }
 
-    public Account createAccount(int id, String username, String password) throws NoSuchAlgorithmException {
+    public Account createAccount(int id, String username, String password)  {
         Account newAccount = new Account(id, username, password);
 
         accounts.put(username, newAccount);

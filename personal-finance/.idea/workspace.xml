@@ -6,16 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6b2adf27-c901-4f8f-afc0-afa8af5ef54b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/commands/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/commands/CreateAccountCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/commands/CreateAccountCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/commands/LoginCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/commands/LoginCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/user/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/user/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/user/AccountHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/user/AccountHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/userInterface/MainUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/userInterface/MainUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/utils/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/utils/DataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/userInterface/LoginUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/userInterface/LoginUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/utils/DataBaseUserStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/utils/DataBaseUserStorage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/utils/PasswordUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/utils/PasswordUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transactions/anton_transactions.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.csv" beforeDir="false" afterPath="$PROJECT_DIR$/users.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/utils/UserStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/utils/UserStorage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

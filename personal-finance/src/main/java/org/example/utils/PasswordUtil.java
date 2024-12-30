@@ -13,6 +13,9 @@ public class PasswordUtil {
 
 
 	public static boolean checkPassword(String password, String hashedPassword)  {
+		if (hashedPassword == null || !hashedPassword.startsWith("$2a$")) {
+                throw new IllegalArgumentException("Invalid hash version");
+        }
 		return BCrypt.checkpw(password, hashedPassword);
 	}
 }

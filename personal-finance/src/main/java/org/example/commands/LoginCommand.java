@@ -16,7 +16,7 @@ public class LoginCommand extends Command{
 		this.accountHandler = accountHandler;
 	}
 
-	public boolean execute(String username, String password) throws NoSuchAlgorithmException {
+	public boolean execute(String username, String password)  {
 		Account account = accountHandler.authenticate(username, password);
 		return account != null;
 	}

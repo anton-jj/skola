@@ -35,7 +35,7 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
                 return new Account(id, username, password);
             }
             return null;
-        } catch (SQLException | NoSuchAlgorithmException e) {
+        } catch (SQLException  e) {
             throw new RuntimeException("Could not find user: " + e.getMessage());
         } finally {
             try {
@@ -108,7 +108,7 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
 
                 accounts.put(username, new Account(id, username, password));
             }
-        } catch (SQLException | NoSuchAlgorithmException e) {
+        } catch (SQLException e) {
             System.out.println("Error loading accounts from database" + e.getMessage());
         } finally {
             try {
