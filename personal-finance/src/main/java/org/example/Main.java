@@ -7,13 +7,14 @@ import org.example.userInterface.LoginUI;
 import org.example.userInterface.MainUI;
 import org.example.utils.Database;
 import org.example.utils.DataBaseUserStorage;
+import org.example.utils.DatabaseTransactionStorage;
 import org.example.utils.TransactionStorage;
 
 import java.io.IOException;
 import java.sql.Connection;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)  {
 
         Database db = Database.getInstance();
         db.createTables();
@@ -28,14 +29,10 @@ public class Main {
 
         Account currentAccount = accountHandler.getCurrent();
 
-        TransactionStorage transactionStoge = new TransactionStorage(currentAccount.getUsername());
+        DatabaseTransactionStorage transactionStoge = new DatabaseTransactionStorage(conn, currentAccount);
         FinanceHandler financeHandler = new FinanceHandler(currentAccount);
 
-        try {
-            financeHandler.loadTransactions(transactionStoge);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        financeHandler.loadTransactions(transactionStoge);
 
         MainUI ui = new MainUI(financeHandler);
         ui.start();

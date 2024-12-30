@@ -17,7 +17,7 @@ public class ExitCommand extends Command{
     }
     @Override
     public void execute() {
-        this.transactionStorage = new DatabaseTransactionStorage(db.getConnection(), financeHandler.getAccount().getUsername());
+        this.transactionStorage = new DatabaseTransactionStorage(db.getConnection(), financeHandler.getAccount());
         transactionStorage.save(financeHandler.getTransactionHandler().getTransactions());
         System.exit(0);
     }

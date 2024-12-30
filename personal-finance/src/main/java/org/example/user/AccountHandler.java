@@ -14,7 +14,7 @@ public class AccountHandler {
     private DataBaseUserStorage dbStorage;
     private Account currentAccount;
 
-    public AccountHandler(DataBaseUserStorage dbStorage) throws IOException {
+    public AccountHandler(DataBaseUserStorage dbStorage)  {
         this.dbStorage = dbStorage;
         this.accounts = new HashMap<>();
         this.accounts = dbStorage.load();

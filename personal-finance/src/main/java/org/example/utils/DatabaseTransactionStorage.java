@@ -2,6 +2,7 @@ package org.example.utils;
 
 import org.example.commands.Command;
 import org.example.financeManager.Transaction;
+import org.example.user.Account;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,31 +14,24 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
             "SELECT * FROM transactions WHERE user_id = ?";
     private final String DELETE_TRANSACTION_SQL =
             "DELETE FROM transactions WHERE id = ?";
-    private final String FIND_USER_SQL = "SELECT id FROM users WHERE username = ?";
 
     private Connection conn;
-    private String username;
+    Account currentAccount;
 
-    public DatabaseTransactionStorage(Connection conn, String username) {
+    public DatabaseTransactionStorage(Connection conn, Account currentAccount) {
         this.conn = conn;
-        this.username = username;
+        this.currentAccount = currentAccount;
     }
-
 
 
     @Override
     public void save(ArrayList<Transaction> data) {
         try {
-            PreparedStatement userps = conn.prepareStatement(FIND_USER_SQL);
-            userps.setString(1, username);
-            ResultSet res = userps.executeQuery();
 
-            int userid = 0;
+            int userid = currentAccount.getId();
 
-            if (res.next()) {
-                userid = res.getInt("id");
-            } else {
-                throw new RuntimeException("user not found");
+            if (userid == 0){
+                throw new RuntimeException("User ID not valid");
             }
 
             try (PreparedStatement ps = conn.prepareStatement(INSERT_TRANSACTION_SQL)) {
@@ -51,14 +45,34 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
                 }
                 ps.executeBatch();
             }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Error saving transactions");
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error saving transactions");
         }
+    }
 
     @Override
     public ArrayList<Transaction> load() {
-        return null;
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement(SELECT_TRANSACTIONS_BY_USER_SQL);
+            ps.setInt(1, currentAccount.getId());
+            ResultSet res = ps.executeQuery();
+
+            while (res.next()) {
+                int id = res.getInt("id");
+                String description = res.getString("description");
+                String type = res.getString( "type");
+                int userId = res.getInt( "user_id");
+                double amount = res.getDouble( "amount");
+                Date date = res.getDate("date");
+
+                Transaction.TransactionType transactionType = Transaction.TransactionType.valueOf(type);
+                transactions.add(new Transaction(amount, description, date.toLocalDate(), transactionType));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error loading transactions");
+        }
+        return transactions;
     }
 }

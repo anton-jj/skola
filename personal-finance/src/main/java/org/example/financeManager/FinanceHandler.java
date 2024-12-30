@@ -1,9 +1,7 @@
 package org.example.financeManager;
 
-import java.io.IOException;
-
 import org.example.user.Account;
-import org.example.utils.TransactionStorage;
+import org.example.utils.DatabaseTransactionStorage;
 
 public class FinanceHandler {
 
@@ -21,7 +19,7 @@ public class FinanceHandler {
 	}
 
 
-	public void loadTransactions(TransactionStorage transactionStorage) throws IOException {
+	public void loadTransactions(DatabaseTransactionStorage transactionStorage)  {
         transactionHandler.setTransactions(transactionStorage.load());
         System.out.println("Transactions loaded.");
     }

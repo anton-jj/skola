@@ -10,7 +10,7 @@ public class Database {
     private Connection conn;
     String url = "jdbc:postgresql://localhost/finance?user=postgres&password=password";
 
-    private Database(){
+    private Database() {
 
     }
 
@@ -42,10 +42,10 @@ public class Database {
     }
 
     public Connection getConnection() {
-      return this.conn;
-  }
+        return this.conn;
+    }
 
-  public void createTables(){
+    public void createTables() {
 
         if (conn == null) {
             System.out.println("failed to connect to database");
@@ -65,9 +65,20 @@ public class Database {
                     "user_id INT REFERENCES users(id)," +
                     "amount DECIMAL(10, 2)," +
                     "date DATE)"
-                    );
+            );
         } catch (RuntimeException | SQLException e) {
-          throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
-  }
+    }
+
+    public void closeConnection() {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
