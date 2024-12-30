@@ -46,11 +46,20 @@ public class AccountHandler {
     }
 
     public Account createAccount(int id, String username, String password)  {
-        Account newAccount = new Account(id, username, password);
+        Account existingUser = dbStorage.findUser(username);
+
+        if (existingUser != null) {
+            throw new RuntimeException("User already exists");
+        }
+
+        String hashedpw = PasswordUtil.hashPassword(password);
+        Account newAccount = new Account(0, username, hashedpw);
 
         accounts.put(username, newAccount);
+
         dbStorage.save(accounts);
-        return newAccount;
+
+       return newAccount;
     }
 
     public Account getCurrent() {

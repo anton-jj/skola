@@ -53,14 +53,14 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
 
         Connection conn = null;
         PreparedStatement ps = null;
+        ResultSet res = null;
 
         try  {
             conn = DataBase.getInstance().getConnection();
             for (Account account : data.values()) {
                 String hashedPassword = PasswordUtil.hashPassword(account.getPassword());
-                account.setPassword(hashedPassword);
-                Account existingUser = findUser(account.getUsername());
 
+                Account existingUser = findUser(account.getUsername());
 
                 if (existingUser != null) {
                     ps = conn.prepareStatement(UPDATE_USER_QUERY);
@@ -73,10 +73,10 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
                     ps.setString(2, account.getPassword());
                     ps.executeUpdate();
 
-                    ResultSet genKey = ps.executeQuery();
+                    res = ps.getGeneratedKeys();
 
-                    if (genKey.next()) {
-                        int id = genKey.getInt(1);
+                    if (res.next()) {
+                        int id = res.getInt(1);
                         account.setId(id);
                     }
                 }
@@ -86,7 +86,7 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
         } finally {
             try {
                 if (ps != null) ps.close();
-
+                if (res != null) res.close();
             } catch (SQLException e) {
                 System.err.println("Error closing statment" +  e.getMessage());
             }
