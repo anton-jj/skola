@@ -25,6 +25,10 @@ public class Account {
 
 	public int getId() {return id;}
 
+	public void setPassword(String password) {
+		this.hashPassword = password;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}

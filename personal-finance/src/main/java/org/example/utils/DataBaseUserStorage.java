@@ -57,6 +57,8 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
         try  {
             conn = DataBase.getInstance().getConnection();
             for (Account account : data.values()) {
+                String hashedPassword = PasswordUtil.hashPassword(account.getPassword());
+                account.setPassword(hashedPassword);
                 Account existingUser = findUser(account.getUsername());
 
 
