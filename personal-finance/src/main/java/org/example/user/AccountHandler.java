@@ -49,7 +49,7 @@ public class AccountHandler {
         }
 
         String hashedpw = PasswordUtil.hashPassword(password);
-        Account newAccount = new Account(0, username, hashedpw, 0.0);
+        Account newAccount = new Account(id, username, hashedpw, 0.0);
 
         accounts.put(username, newAccount);
 

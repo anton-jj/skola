@@ -18,6 +18,11 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
     ResultSet res = null;
 
     public Account findUser(String username) {
+
+        if (conn == null) {
+            throw new RuntimeException("Database connection is closed.");
+        }
+
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
@@ -37,13 +42,6 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
             return null;
         } catch (SQLException  e) {
             throw new RuntimeException("Could not find user: " + e.getMessage());
-        } finally {
-            try {
-                if (res != null) res.close();
-                if (ps != null) ps.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing resources " +  e.getMessage());
-            }
         }
     }
 
@@ -85,13 +83,6 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error saving account", e);
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (res != null) res.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing statement" +  e.getMessage());
-            }
         }
     }
 
@@ -115,13 +106,6 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
             }
         } catch (SQLException e) {
             System.out.println("Error loading accounts from database" + e.getMessage());
-        } finally {
-            try {
-                if (res != null) res.close();
-                if (statement != null) statement.close();
-            } catch (SQLException e) {
-                System.out.println("Error closing" + e.getMessage());
-            }
         }
         return accounts;
     }
@@ -159,14 +143,6 @@ public class DataBaseUserStorage implements DataStorage <Map<String, Account>>{
             return null;
         } catch (SQLException  e) {
             throw new RuntimeException("Could not find user: " + e.getMessage());
-        } finally {
-            try {
-                if (res != null) res.close();
-                if (ps != null) ps.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing resources " +  e.getMessage());
-            }
         }
-
+        }
     }
-}

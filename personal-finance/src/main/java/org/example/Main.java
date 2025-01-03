@@ -23,23 +23,23 @@ public class Main {
         DataBaseUserStorage dbusers = new DataBaseUserStorage();
         AccountHandler accountHandler = new AccountHandler(dbusers);
 
-        DatabaseTransactionStorage transactionStoge = new DatabaseTransactionStorage(conn,null);
-        FinanceHandler financeHandler = new FinanceHandler(null);
         boolean running = true;
         while (running) {
-
             LoginUI loginUI = new LoginUI(accountHandler);
             loginUI.start();
 
             Account currentAccount = accountHandler.getCurrent();
+            if (currentAccount == null) {
+                continue;
+            }
 
-            financeHandler = new FinanceHandler(currentAccount);
-            transactionStoge = new DatabaseTransactionStorage(conn, currentAccount);
+            FinanceHandler financeHandler = new FinanceHandler(currentAccount);
+            DatabaseTransactionStorage transactionStorage = new DatabaseTransactionStorage(conn, currentAccount);
 
-            financeHandler.loadTransactions(transactionStoge);
+            financeHandler.loadTransactions(transactionStorage);
             MainUI ui = new MainUI(financeHandler, accountHandler);
             ui.start();
         }
-
+        db.closeConnection();
     }
 }

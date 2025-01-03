@@ -11,7 +11,6 @@ public class Database {
     String url = "jdbc:postgresql://localhost/finance?user=postgres&password=password";
 
     private Database() {
-
     }
 
     public static Database getInstance() {
@@ -30,8 +29,8 @@ public class Database {
         try {
             System.out.println("Attempting to connect to database...");
             conn = DriverManager.getConnection(url);
-            if (conn != null) {
-                System.out.println("Database connected successfully!");
+            if (conn != null && !conn.isClosed()) {
+                System.out.println("database connection successful");
             } else {
                 System.out.println("Database connection failed: conn is null.");
             }
@@ -42,7 +41,14 @@ public class Database {
     }
 
     public Connection getConnection() {
-        return this.conn;
+        try {
+            if (conn == null || conn.isClosed()) {
+                createConnection();
+            }
+            return this.conn;
+        }catch (SQLException e) {
+            throw new RuntimeException("Connection error" + e);
+        }
     }
 
     public void createTables() {
@@ -77,7 +83,7 @@ public class Database {
                 conn.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to close connection" + e);
         }
     }
 }

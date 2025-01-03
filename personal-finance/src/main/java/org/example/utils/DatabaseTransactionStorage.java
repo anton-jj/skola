@@ -14,18 +14,17 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
     private final String DELETE_TRANSACTION_SQL =
             "DELETE FROM transactions WHERE id = ?";
 
-    private Connection conn;
     Account currentAccount;
 
     public DatabaseTransactionStorage(Connection conn, Account currentAccount) {
-        this.conn = conn;
         this.currentAccount = currentAccount;
     }
 
 
     @Override
     public void save(ArrayList<Transaction> data) {
-        try {
+        try (Connection conn = Database.getInstance().getConnection();
+        PreparedStatement ps = conn.prepareStatement(INSERT_TRANSACTION_SQL)) {
 
             int userid = currentAccount.getId();
 
@@ -33,7 +32,6 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
                 throw new RuntimeException("User ID not valid");
             }
 
-            try (PreparedStatement ps = conn.prepareStatement(INSERT_TRANSACTION_SQL)) {
                 for (Transaction transactions : data) {
                     ps.setString(1, transactions.getDescription());
                     ps.setString(2, String.valueOf(transactions.getType()));
@@ -42,8 +40,9 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
                     ps.setDate(5, Date.valueOf(transactions.getDate()));
                     ps.addBatch();
                 }
+
                 ps.executeBatch();
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error saving transactions");
@@ -53,8 +52,9 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
     @Override
     public ArrayList<Transaction> load() {
         ArrayList<Transaction> transactions = new ArrayList<>();
-        try {
-            PreparedStatement ps = conn.prepareStatement(SELECT_TRANSACTIONS_BY_USER_SQL);
+        try (Connection conn = Database.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(SELECT_TRANSACTIONS_BY_USER_SQL)) {
+
             ps.setInt(1, currentAccount.getId());
             ResultSet res = ps.executeQuery();
 
@@ -71,9 +71,9 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
                 Transaction.TransactionType transactionType = Transaction.TransactionType.valueOf(type);
                 transactions.add(new Transaction(amount, description, date.toLocalDate(), transactionType));
             }
+            return transactions;
         } catch (SQLException e) {
             throw new RuntimeException("Error loading transactions");
         }
-        return transactions;
     }
 }
