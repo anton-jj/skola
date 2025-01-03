@@ -1,12 +1,9 @@
 package org.example.user;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.example.utils.PasswordUtil;
-import org.example.utils.UserStorage;
 import org.example.utils.DataBaseUserStorage;
 
 public class AccountHandler {
@@ -21,13 +18,12 @@ public class AccountHandler {
         this.currentAccount = null;
     }
 
-    public boolean deleteAccount(String username) {
-        Account account = dbStorage.findUser(username);
+    public void setCurrent(Account account){
+       this.currentAccount = account;
+    }
 
-        if (account != null) {
-           return dbStorage.deleteUser(username);
-        }
-        return false;
+    public void deleteAccount() {
+            dbStorage.deleteUser(currentAccount.getId());
     }
 
     public Account authenticate(String username, String password) {
@@ -53,7 +49,7 @@ public class AccountHandler {
         }
 
         String hashedpw = PasswordUtil.hashPassword(password);
-        Account newAccount = new Account(0, username, hashedpw);
+        Account newAccount = new Account(0, username, hashedpw, 0.0);
 
         accounts.put(username, newAccount);
 

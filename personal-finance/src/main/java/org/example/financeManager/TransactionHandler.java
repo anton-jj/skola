@@ -5,19 +5,24 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Map;
 
+import org.example.user.Account;
 import org.example.userInterface.ConsoleOutput;
 import org.example.userInterface.InputHandler;
+import org.example.utils.DataBaseUserStorage;
 
 public class TransactionHandler {
 	private ArrayList<Transaction> transactions;
 	private InputHandler inputH;
 	private ConsoleOutput output;
+	Account account;
 
-	public TransactionHandler(){
+	public TransactionHandler(Account account){
 		this.inputH = new InputHandler();
 		this.transactions = new ArrayList<>();
 		this.output = new ConsoleOutput();
+		this.account = account;
 	}
 
 	public ArrayList<Transaction> getTransactions(){
@@ -36,11 +41,25 @@ public class TransactionHandler {
 			Transaction transaction = createTransaction(type);
 			if (transaction != null) {
 				transactions.add(transaction);
+				updateBalance(transaction);
 				output.displayMessage("Transaction added\n");
 			}else {
 				output.displayError("Invalid transaction you, Please Enter either 'Expense or Income' ");
 			}
 		}
+	}
+
+	private void updateBalance(Transaction transaction){
+		double amount = transaction.getAmount();
+
+		if (transaction.getType() == Transaction.TransactionType.EXPENSE) {
+			account.updateBalance(account.getBalance() - amount);
+		}else if (transaction.getType() == Transaction.TransactionType.INCOME) {
+			account.updateBalance(account.getBalance() + amount);
+		}
+
+		DataBaseUserStorage db = new DataBaseUserStorage();
+		db.save(Map.of(account.getUsername(), account));
 	}
 
 	public void removeTransaction() {
@@ -121,4 +140,8 @@ public class TransactionHandler {
 			return null;
 		}
 	}
-} 
+
+	public void clearTransactions() {
+		transactions.clear();
+	}
+}

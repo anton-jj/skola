@@ -28,6 +28,10 @@ public class UserStorage implements DataStorage<Map<String, Account>> {
 
 	@Override
 	public Map<String, Account> load() {
+		return Map.of();
+	}
+
+	/*public Map<String, Account> load() {
 		Map<String, Account> accounts = new HashMap<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 			String line;
@@ -52,4 +56,6 @@ public class UserStorage implements DataStorage<Map<String, Account>> {
         }
 		return accounts;
     }
+
+	 */
 }

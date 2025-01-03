@@ -1,6 +1,5 @@
 package org.example.utils;
 
-import org.example.commands.Command;
 import org.example.financeManager.Transaction;
 import org.example.user.Account;
 
@@ -66,6 +65,8 @@ public class DatabaseTransactionStorage implements DataStorage<ArrayList<Transac
                 int userId = res.getInt( "user_id");
                 double amount = res.getDouble( "amount");
                 Date date = res.getDate("date");
+
+                System.out.println("Loaded transaction: " + description + " for user ID: " + userId);
 
                 Transaction.TransactionType transactionType = Transaction.TransactionType.valueOf(type);
                 transactions.add(new Transaction(amount, description, date.toLocalDate(), transactionType));

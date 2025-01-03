@@ -4,13 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.example.financeManager.FinanceHandler;
+import org.example.user.AccountHandler;
+
 public class CommandHandler implements CommandService {
 	private FinanceHandler financeHandler;
 	private final Map<Integer, Command> commandMap;
+	private  AccountHandler accountHandler;
 
-	public CommandHandler(FinanceHandler financeHandler){
+	public CommandHandler(FinanceHandler financeHandler, AccountHandler accountHandler){
 		this.financeHandler = financeHandler;
 		this.commandMap = new HashMap<>();
+		this.accountHandler = accountHandler;
 		createCommands();
 	}
 
@@ -25,6 +29,8 @@ public class CommandHandler implements CommandService {
 		initializeCommand(new ShowTransactionsCommand(financeHandler));
 		initializeCommand(new ReportCommand(financeHandler));
 		initializeCommand(new ExitCommand(financeHandler));
+		initializeCommand(new LogoutCommand(accountHandler));
+		initializeCommand(new DeleteUserCommand(accountHandler));
 	}
 
 	@Override

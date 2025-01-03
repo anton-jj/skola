@@ -4,21 +4,21 @@ import org.example.commands.Command;
 import org.example.commands.CommandHandler;
 import org.example.commands.DeleteUserCommand;
 import org.example.financeManager.FinanceHandler;
-
-import java.util.ArrayList;
+import org.example.user.AccountHandler;
 
 public class MainUI extends UserInterface{
 	private CommandHandler command;
-	private DeleteUserCommand dc;
+	private AccountHandler accountHandler;
 
-	public MainUI(FinanceHandler financeHandler) {
+	public MainUI(FinanceHandler financeHandler, AccountHandler accountHandler) {
 		super();
-		this.command = new CommandHandler(financeHandler);
+		this.accountHandler = accountHandler;
+		this.command = new CommandHandler(financeHandler, accountHandler);
 	}
 
 	@Override
 	public void start() {
-		while (true) {
+		while (accountHandler.getCurrent() != null) {
 			menu();
 			int choice = input.handleMenuPrompt();
 			command.executeCommand(choice);

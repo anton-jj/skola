@@ -5,21 +5,19 @@ import org.example.utils.DatabaseTransactionStorage;
 
 public class FinanceHandler {
 
-	private BalanceHandler balanceHandler;
 	private TransactionHandler transactionHandler;
 	private ReportGenerator reportGenerator;
 	private Account account;
 
 	public FinanceHandler(Account account) {
 		this.account = account;
-		this.transactionHandler = new TransactionHandler();
-		this.balanceHandler = new BalanceHandler(transactionHandler);
+		this.transactionHandler = new TransactionHandler(account);
 		this.reportGenerator = new ReportGenerator(transactionHandler);
-
 	}
 
 
 	public void loadTransactions(DatabaseTransactionStorage transactionStorage)  {
+		transactionHandler.clearTransactions();
         transactionHandler.setTransactions(transactionStorage.load());
         System.out.println("Transactions loaded.");
     }
@@ -32,13 +30,9 @@ public class FinanceHandler {
 		return this.transactionHandler;
 	}
 
-	public BalanceHandler getBalanceHandler(){
-		return this.balanceHandler;
-	}
 	public void getBalance() {
-		System.out.println("Balance: " + balanceHandler.getBalance());
+		System.out.println("Balance: " + account.getBalance());
 	}
-
 
 	public void addTransaction() {
 		transactionHandler.addTransaction();

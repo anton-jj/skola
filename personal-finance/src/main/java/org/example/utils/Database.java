@@ -62,7 +62,7 @@ public class Database {
                     "id SERIAL PRIMARY KEY," +
                     "description TEXT, " +
                     "type text, " +
-                    "user_id INT REFERENCES users(id)," +
+                    "user_id INT REFERENCES users(id) ON DELETE CASCADE," +
                     "amount DECIMAL(10, 2)," +
                     "date DATE)"
             );

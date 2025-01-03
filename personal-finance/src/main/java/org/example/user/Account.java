@@ -1,18 +1,18 @@
 package org.example.user;
 
-import java.security.NoSuchAlgorithmException;
 
-import org.example.utils.PasswordUtil;
 
 public class Account {
 	private int id;
 	private String username;
 	private String hashPassword;
+	private double balance;
 
-	public Account(int id, String username, String hashPassword) {
+	public Account(int id, String username, String hashPassword, double balance) {
 		this.id = id;
 		this.username = username; 
 		this.hashPassword = hashPassword;
+		this.balance = 0.0;
 	}
 
 	public String getUsername() {
@@ -23,14 +23,18 @@ public class Account {
 		return hashPassword;
 	}
 
-	public int getId() {return id;}
-
-	public void setPassword(String password) {
-		this.hashPassword = password;
+	public double getBalance() {
+		return balance;
 	}
+
+	public int getId() {return id;}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void updateBalance(double balance) {
+		this.balance = balance;
 	}
 }
 
